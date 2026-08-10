@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CinemaConnect</title>
+    <link rel="stylesheet" href="style_clean.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar">
+        <a href="index.html" class="brand"
+          >CINEMA<span class="dot">•</span>CONNECT</a
+        >
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          ☰
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
+          <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
+          <li>
+            <a
+              href="admin.html"
+              data-page="admin"
+              id="adminNavLink"
+              style="display: none"
+              >Admin</a
+            >
+          </li>
+        </ul>
+        <div class="nav-cta" id="navCta"></div>
+      </nav>
+      <div class="filmstrip-rule"></div>
+    </header>
+
+    <main class="container section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">
+            <small>Section Label</small>Page Heading
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="filmstrip-rule flip"></div>
+      <div class="container">
+        CinemaConnect · Web Development Summer Training 2026.
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/nav.js"></script>
+    <script>
+      ccRenderNav('PAGE_KEY');
+    </script>
+  </body>
+</html>
