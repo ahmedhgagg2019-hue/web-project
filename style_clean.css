@@ -75,7 +75,8 @@ a:hover {
   padding: 16px 24px;
 }
 
-.brand {
+.brand,
+.brand:hover {
   font-family: var(--f-display);
   font-size: 28px;
   letter-spacing: 0.04em;
@@ -83,10 +84,6 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.brand:hover {
-  color: var(--gold);
   text-decoration: none;
 }
 
