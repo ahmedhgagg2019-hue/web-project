@@ -311,6 +311,34 @@ function ccLoginUser(email, password) {
   return { ok: true, user: user };
 }
 
+function ccUpdateUser(id, updates) {
+  var users = ccGetUsers();
+  var index = -1;
+
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].id === id) {
+      index = i;
+      break;
+    }
+  }
+
+  if (index === -1) {
+    return null;
+  }
+
+  if (updates.name !== undefined) {
+    users[index].name = updates.name;
+  }
+
+  if (updates.email !== undefined) {
+    users[index].email = updates.email;
+  }
+
+  ccSaveUsers(users);
+
+  return users[index];
+}
+
 function ccLogoutUser() {
   localStorage.removeItem(CC_KEYS.SESSION);
 }
