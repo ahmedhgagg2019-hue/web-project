@@ -1,4 +1,4 @@
-
+// el keys ely hanest5demha fel localStorage 3ashan ne7faz el data
 var CC_KEYS = {
   MOVIES: 'cc_movies',
   USERS: 'cc_users',
@@ -98,7 +98,7 @@ var CC_SEED_MOVIES = [
     poster: 'images/posters/backrooms.jpg',
     banner: 'images/banners/backrooms-banner.jpg',
     description:
-      'A therapist follows her missing patient through a strange doorway into an endless maze of liminal rooms that shouldn\'t exist.',
+      "A therapist follows her missing patient through a strange doorway into an endless maze of liminal rooms that shouldn't exist.",
     releaseDate: '2026-05-29',
     showtimes: ['14:30', '17:45', '20:45'],
     price: 100,
@@ -112,7 +112,7 @@ var CC_SEED_MOVIES = [
     poster: 'images/posters/obsession.jpg',
     banner: 'images/banners/obsession-banner.jpg',
     description:
-      'A lonely music-store clerk breaks a mysterious novelty toy to win his crush\'s heart — and gets exactly what he wished for, at a horrifying price.',
+      "A lonely music-store clerk breaks a mysterious novelty toy to win his crush's heart — and gets exactly what he wished for, at a horrifying price.",
     releaseDate: '2026-05-15',
     showtimes: ['13:30', '16:15', '19:15', '21:45'],
     price: 100,
@@ -146,7 +146,8 @@ function ccInitData() {
   var storedMoviesText = localStorage.getItem(CC_KEYS.MOVIES);
   var storedMovies = storedMoviesText ? JSON.parse(storedMoviesText) : null;
 
-  if (!Array.isArray(storedMovies)) { // law mafeesh data metsave3a abl keda 3ayzeen ne7ot el seed data
+  if (!Array.isArray(storedMovies)) {
+    // law mafeesh data metsave3a abl keda ne7ot el seed data
     localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(CC_SEED_MOVIES));
   } else {
     // law feh data metsayva abl keda ne7ot el saved data 3ala el seed data, w ne7ot el saved data law feh updates
@@ -188,7 +189,7 @@ function ccInitData() {
         finalMovies.push(storedMovies[k]);
       }
     }
-
+// save el final movies fel localStorage
     localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(finalMovies));
   }
 

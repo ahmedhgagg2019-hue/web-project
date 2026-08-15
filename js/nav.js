@@ -40,7 +40,7 @@ function ccRenderNav(activePage) {
     }
   }
 
-  // Login/Register, aw name el user + logout
+  // Login/Register aw name el user + logout
   var cta = document.getElementById('navCta');
   if (cta) {
     if (user) {
