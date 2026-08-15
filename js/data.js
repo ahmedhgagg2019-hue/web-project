@@ -136,7 +136,7 @@ function ccIsUpcoming(movie) {
 var CC_SEED_ADMIN = {
   id: 'u_admin',
   name: 'Admin',
-  email: 'admin@cinemaconnect.test',
+  email: 'admin@gmail.com',
   password: 'Admin@123',
   role: 'admin',
 };
@@ -189,7 +189,7 @@ function ccInitData() {
         finalMovies.push(storedMovies[k]);
       }
     }
-// save el final movies fel localStorage
+    // save el final movies fel localStorage
     localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(finalMovies));
   }
 
