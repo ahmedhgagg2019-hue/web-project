@@ -203,14 +203,15 @@ function ccInitData() {
 ccInitData();
 
 // ---- functions bta3et el movies ----
+// get el movies mn el localStorage
 function ccGetMovies() {
   return JSON.parse(localStorage.getItem(CC_KEYS.MOVIES) || '[]');
 }
-
+// save el movies fel localStorage
 function ccSaveMovies(movies) {
   localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(movies));
 }
-
+// get movie by id
 function ccGetMovieById(id) {
   var movies = ccGetMovies();
   for (var i = 0; i < movies.length; i++) {
@@ -220,7 +221,7 @@ function ccGetMovieById(id) {
   }
   return null;
 }
-
+// add movie
 function ccAddMovie(movie) {
   var movies = ccGetMovies();
   if (!movie.id) {
@@ -230,7 +231,7 @@ function ccAddMovie(movie) {
   ccSaveMovies(movies);
   return movie;
 }
-
+// update movie
 function ccUpdateMovie(id, updates) {
   var movies = ccGetMovies();
   var index = -1;
@@ -249,7 +250,7 @@ function ccUpdateMovie(id, updates) {
   ccSaveMovies(movies);
   return movies[index];
 }
-
+// delete movie
 function ccDeleteMovie(id) {
   var movies = ccGetMovies();
   var newMovies = [];
@@ -265,14 +266,15 @@ function ccDeleteMovie(id) {
 var ccMovies = ccGetMovies();
 
 // ---- users w login/register ----
+// get el users mn el localStorage
 function ccGetUsers() {
   return JSON.parse(localStorage.getItem(CC_KEYS.USERS) || '[]');
 }
-
+// save el users fel localStorage
 function ccSaveUsers(users) {
   localStorage.setItem(CC_KEYS.USERS, JSON.stringify(users));
 }
-
+// find user by email
 function ccFindUserByEmail(email) {
   var users = ccGetUsers();
   for (var i = 0; i < users.length; i++) {
@@ -282,7 +284,7 @@ function ccFindUserByEmail(email) {
   }
   return null;
 }
-
+// register user
 function ccRegisterUser(data) {
   var existingUser = ccFindUserByEmail(data.email);
   if (existingUser) {
@@ -302,7 +304,7 @@ function ccRegisterUser(data) {
 
   return { ok: true, user: newUser };
 }
-
+// login user
 function ccLoginUser(email, password) {
   var user = ccFindUserByEmail(email);
   if (!user || user.password !== password) {
@@ -311,7 +313,7 @@ function ccLoginUser(email, password) {
   localStorage.setItem(CC_KEYS.SESSION, JSON.stringify({ userId: user.id }));
   return { ok: true, user: user };
 }
-
+// update user
 function ccUpdateUser(id, updates) {
   var users = ccGetUsers();
   var index = -1;
@@ -339,11 +341,11 @@ function ccUpdateUser(id, updates) {
 
   return users[index];
 }
-
+// logout user
 function ccLogoutUser() {
   localStorage.removeItem(CC_KEYS.SESSION);
 }
-
+// get current logged in user
 function ccGetCurrentUser() {
   var sessionText = localStorage.getItem(CC_KEYS.SESSION);
   if (!sessionText) {
@@ -360,14 +362,15 @@ function ccGetCurrentUser() {
 }
 
 // ---- bookings ----
+// get el bookings mn el localStorage
 function ccGetBookings() {
   return JSON.parse(localStorage.getItem(CC_KEYS.BOOKINGS) || '[]');
 }
-
+// save el bookings fel localStorage
 function ccSaveBookings(bookings) {
   localStorage.setItem(CC_KEYS.BOOKINGS, JSON.stringify(bookings));
 }
-
+// add booking
 function ccAddBooking(booking) {
   var bookings = ccGetBookings();
   booking.id = 'b_' + Date.now();
@@ -376,7 +379,7 @@ function ccAddBooking(booking) {
   ccSaveBookings(bookings);
   return booking;
 }
-
+// get bookings for user
 function ccGetBookingsForUser(userId) {
   var bookings = ccGetBookings();
   var result = [];
@@ -387,7 +390,7 @@ function ccGetBookingsForUser(userId) {
   }
   return result;
 }
-
+// cancel booking
 function ccCancelBooking(bookingId) {
   var bookings = ccGetBookings();
   var newBookings = [];

@@ -1,4 +1,4 @@
-
+// el function di bt3ml check lw el function ccGetMovies mwgoda aw la2, lw mwgoda bt3mlha call w trga3 el result, lw msh mwgoda trga3 array fady
 function ccGetMoviesSafe() {
   if (typeof ccGetMovies === 'function') {
     return ccGetMovies();
@@ -7,6 +7,7 @@ function ccGetMoviesSafe() {
 }
 
 // ----- slider el sewar -----
+// el function di bt3ml init lel slider elly fe el home page
 function ccInitHeroSlider() {
   var sliderEl = document.getElementById('heroSlider');
   var track = document.getElementById('sliderTrack');
@@ -72,7 +73,7 @@ function ccInitHeroSlider() {
 
   var index = 0;
   var autoplayId = null;
-
+// el function di bt3ml render lel slider, bta5od el index ely 3ayz tshow feh w t7ot el transform bta3 el track 3la 7sb el index, w kaman bt3ml highlight lel dot elly mwgoda feh
   function render() {
     track.style.transform = 'translateX(-' + index * 100 + '%)';
     for (var i = 0; i < dots.length; i++) {
@@ -83,37 +84,38 @@ function ccInitHeroSlider() {
       }
     }
   }
-
+// el function di bt3ml go to lel slide ely 3ayz tshow bta5od el index w t7ot el index 3la 7sb el slides length w bt3ml render
   function goTo(i) {
     index = (i + slides.length) % slides.length;
     render();
   }
-
+// el function di bt3ml go to lel slide ely ba3d el current index
   function next() {
     goTo(index + 1);
   }
-
+//  el function di bt3ml go to lel slide ely abl el current index
   function prev() {
     goTo(index - 1);
   }
-
+// el function di bt3ml start lel autoplay, bt3ml stop lw mwgoda w b3d kda bt3ml setInterval lel next every 5 seconds
   function startAutoplay() {
     stopAutoplay();
     autoplayId = setInterval(next, 5000);
   }
-
+// el function di bt3ml stop lel autoplay, lw mwgoda bt3ml clearInterval
   function stopAutoplay() {
     if (autoplayId) {
       clearInterval(autoplayId);
     }
   }
-
+// el event listeners lel prev w next buttons, lw mwgoda, w kaman el mouse enter w leave 3la el slider 3shan ywa2f w ybda2 autoplay
   if (prevBtn) {
     prevBtn.addEventListener('click', function () {
       prev();
       startAutoplay();
     });
   }
+  // el event listener lel next button, lw mwgoda
   if (nextBtn) {
     nextBtn.addEventListener('click', function () {
       next();
@@ -129,6 +131,7 @@ function ccInitHeroSlider() {
 }
 
 // ----- grid el featured movies -----
+// el function di bt3ml render lel featured movies grid, bta5od awel 4 movies mn el data w t7ot el html bta3hom fe el grid
 function ccRenderFeaturedMovies() {
   var grid = document.getElementById('featuredMovies');
   if (!grid) {
@@ -164,7 +167,7 @@ function ccRenderFeaturedMovies() {
 
   grid.innerHTML = html;
 }
-
+// el function di bt3ml init lel home page, bt3ml call lel ccInitHeroSlider w ccRenderFeaturedMovies
 document.addEventListener('DOMContentLoaded', function () {
   ccInitHeroSlider();
   ccRenderFeaturedMovies();
