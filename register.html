@@ -1,13 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CinemaConnect · Register</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       :root {
         --ink: #0e1016;
@@ -217,7 +220,9 @@
         color: var(--paper);
         font-family: var(--f-body);
         font-size: 14px;
-        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease;
       }
 
       .auth-form input::placeholder {
@@ -304,31 +309,43 @@
         }
       }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="site-header">
       <nav class="navbar">
-        <a href="index.html" class="brand">CINEMA<span class="dot">•</span>CONNECT</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+        <a href="index.html" class="brand"
+          >CINEMA<span class="dot">•</span>CONNECT</a
+        >
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          ☰
+        </button>
         <ul class="nav-links" id="navLinks">
           <li><a href="index.html" data-page="home">Home</a></li>
           <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
           <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
-          <li><a href="admin.html" data-page="admin" id="adminNavLink" class="hidden">Admin</a></li>
+          <li>
+            <a
+              href="admin.html"
+              data-page="admin"
+              id="adminNavLink"
+              class="hidden"
+              >Admin</a
+            >
+          </li>
         </ul>
         <div class="nav-cta" id="navCta"></div>
       </nav>
       <div class="filmstrip-rule"></div>
     </header>
- 
+
     <main>
       <section class="auth-section">
         <div class="auth-card">
           <h1 class="auth-title">Register</h1>
           <p class="auth-subtitle">Create an account to start booking.</p>
- 
+
           <div id="registerError" class="form-error hidden" role="alert"></div>
- 
+
           <form id="registerForm" class="auth-form" novalidate>
             <div class="form-group">
               <label for="registerName">Name</label>
@@ -340,7 +357,7 @@
                 required
               />
             </div>
- 
+
             <div class="form-group">
               <label for="registerEmail">Email</label>
               <input
@@ -351,7 +368,7 @@
                 required
               />
             </div>
- 
+
             <div class="form-group">
               <label for="registerPassword">Password</label>
               <input
@@ -362,7 +379,7 @@
                 required
               />
             </div>
- 
+
             <div class="form-group">
               <label for="registerConfirmPassword">Confirm Password</label>
               <input
@@ -373,29 +390,31 @@
                 required
               />
             </div>
- 
+
             <button type="submit" class="btn btn-primary auth-submit">
               Register
             </button>
           </form>
- 
+
           <p class="auth-switch">
             Already have an account? <a href="login.html">Login</a>
           </p>
         </div>
       </section>
     </main>
- 
+
     <footer class="site-footer">
       <div class="filmstrip-rule flip"></div>
       <div class="container">
         CinemaConnect · Web Development Summer Training 2026.
       </div>
     </footer>
- 
+
     <script src="js/data.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/auth.js"></script>
-
-</body>
+    <script>
+      ccRenderNav('register');
+    </script>
+  </body>
 </html>
