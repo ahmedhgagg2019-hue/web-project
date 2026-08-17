@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CinemaConnect · My Bookings</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* ---- page-specific styles: My Bookings ---- */
+      .bookings-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .booking-card {
+        background: var(--ink-2);
+        border-radius: 10px;
+        padding: 18px;
+        display: grid;
+        grid-template-columns: 80px 1fr auto;
+        gap: 18px;
+        align-items: center;
+      }
+
+      @media (max-width: 640px) {
+        .booking-card {
+          grid-template-columns: 64px 1fr;
+        }
+
+        .booking-card .cancel-btn {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .booking-poster {
+        width: 80px;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        border-radius: 6px;
+        display: block;
+      }
+
+      @media (max-width: 640px) {
+        .booking-poster {
+          width: 64px;
+        }
+      }
+
+      .booking-details h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+      }
+
+      .booking-details .movie-meta {
+        margin: 0 0 4px;
+      }
+
+      .booking-status {
+        display: inline-block;
+        margin: 6px 0 0;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: rgba(79, 179, 168, 0.18);
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .cancel-btn {
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar">
+        <a href="index.html" class="brand"
+          >CINEMA<span class="dot">•</span>CONNECT</a
+        >
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          ☰
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
+          <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
+          <li>
+            <a
+              href="admin.html"
+              data-page="admin"
+              id="adminNavLink"
+              class="hidden"
+              >Admin</a
+            >
+          </li>
+        </ul>
+        <div class="nav-cta" id="navCta"></div>
+      </nav>
+      <div class="filmstrip-rule"></div>
+    </header>
+
+    <main id="bookingsMain">
+      <!-- filled by js/bookings.js -->
+    </main>
+
+    <footer class="site-footer">
+      <div class="filmstrip-rule flip"></div>
+      <div class="container">
+        CinemaConnect · Web Development Summer Training 2026.
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/bookings.js"></script>
+    <script>
+      ccRenderNav('bookings');
+    </script>
+  </body>
+</html>
