@@ -95,25 +95,11 @@ function ccRenderMovieDetails() {
     '<a class="btn btn-primary" href="booking.html?movieId=' + movie.id + '">Book Now</a>' +
     '</div>' +
     '</section>' +
-    '<section class="container section trailer-section">' +
-    '<h3>Trailer</h3>' +
-    '<div class="trailer-wrap">' +
-    '<video controls preload="metadata" poster="' + movie.poster + '" id="trailerVideo">' +
-    '<source src="video/' + movie.id + '.mp4" type="video/mp4" />' +
-    '</video>' +
-    '<p class="trailer-fallback hidden" id="trailerFallback">Trailer not available yet.</p>' +
-    '</div>' +
-    '</section>';
+    
 
   main.innerHTML = html;
 
-  // law el video file msh mawgood, nekhabeeh w nwarih el fallback message badalo
-  var video = document.getElementById('trailerVideo');
-  var fallback = document.getElementById('trailerFallback');
-  if (video && fallback) {
-    video.addEventListener('error', function () {
-      video.classList.add('hidden');
-      fallback.classList.remove('hidden');
+ 
     });
   }
 }
