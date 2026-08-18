@@ -1,11 +1,11 @@
-// متغير حفظ بيانات المستخدم الحالي// متغير حفظ بيانات المستخدم الحالي
+// متغير حفظ بيانات المستخدم الحالي
 var currentUser = null;
 
 document.addEventListener('DOMContentLoaded', function () {
   // 1. تحميل بيانات البروفايل عند فتح الصفحة
   loadProfile();
 
-  // 2. ربط الـ Submit Event للـ Form داخل الـ DOMContentLoaded
+  // 2. ربط الـ Submit Event للـ Form
   var form = document.getElementById('profileForm');
   if (form) {
     form.addEventListener('submit', function (event) {
@@ -14,13 +14,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 3. ربط زرار Edit Profile باستدعاء دالة showEditForm
+  // 3. ربط زرار Edit Profile
   var editBtn = document.getElementById('editProfileBtn');
   if (editBtn) {
     editBtn.addEventListener('click', function () {
       if (currentUser) {
         showEditForm(currentUser);
       }
+    });
+  }
+
+  // 4. ربط زرار Cancel
+  var cancelBtn = document.getElementById('cancelEditBtn');
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', function () {
+      showViewMode();
     });
   }
 });
@@ -62,6 +70,12 @@ function showEditForm(user) {
   var detailsTitle = document.getElementById('detailsTitle');
   var nameInput = document.getElementById('profileName');
   var emailInput = document.getElementById('profileEmail');
+  var message = document.getElementById('profileMessage');
+
+  if (message) {
+    message.textContent = '';
+    message.className = 'form-message';
+  }
 
   if (nameInput) nameInput.value = user.name || '';
   if (emailInput) emailInput.value = user.email || '';
@@ -69,6 +83,17 @@ function showEditForm(user) {
   if (detailsTitle) detailsTitle.textContent = 'Edit your profile';
   if (viewDetails) viewDetails.classList.add('hidden');
   if (form) form.classList.remove('hidden');
+}
+
+// دالة مساعدة للرجوع لوضع العرض (View Mode)
+function showViewMode() {
+  var form = document.getElementById('profileForm');
+  var viewDetails = document.getElementById('profileView');
+  var detailsTitle = document.getElementById('detailsTitle');
+
+  if (detailsTitle) detailsTitle.textContent = 'Account Overview';
+  if (form) form.classList.add('hidden');
+  if (viewDetails) viewDetails.classList.remove('hidden');
 }
 
 // 4. saveProfile()
@@ -125,11 +150,11 @@ function saveProfile() {
   currentUser = updatedUser;
   renderProfile(currentUser);
 
-  // هـ. تحديث الشريط العلوي (Navbar) مباشرة بعد التعديل
+  // هـ. تحديث الشريط العلوي (Navbar)
   if (typeof ccRenderNav === 'function') {
     ccRenderNav('profile');
   }
 
-  message.classList.add('success');
-  message.textContent = 'Profile updated successfully.';
+  // و. العودة لوضع العرض وتأكيد التحديث
+  showViewMode();
 }

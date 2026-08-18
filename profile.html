@@ -15,6 +15,20 @@
         gap: 10px;
         flex-wrap: wrap;
       }
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 15px;
+      }
+      .profile-view-details p {
+        margin: 12px 0;
+        font-size: 15px;
+        color: var(--paper-dim);
+      }
+      .profile-view-details strong {
+        color: var(--paper);
+      }
     </style>
   </head>
   <body>
@@ -54,10 +68,10 @@
             <p id="profileSummaryEmail"></p>
             <span class="profile-role" id="profileRole"></span>
 
-            <!-- زرار My Bookings المضاف حسب الـ Spec -->
             <div class="profile-actions">
               <a href="bookings.html" class="btn btn-outline btn-sm">My Bookings</a>
-              <button id="editProfileBtn" class="btn btn-secondary btn-sm" type="button">Edit Profile</button>
+              <!-- تم تعديل الكلاس إلى btn-outline ليتناسب مع style.css -->
+              <button id="editProfileBtn" class="btn btn-outline btn-sm" type="button">Edit Profile</button>
             </div>
           </aside>
 
@@ -76,7 +90,7 @@
               <p><strong>Email Address:</strong> <span id="viewEmail"></span></p>
             </div>
 
-            <!-- Profile Form (مخفي افتراضياً لحين ضغط Edit Profile) -->
+            <!-- Profile Form -->
             <form id="profileForm" class="hidden" novalidate>
               <div class="form-field">
                 <label for="profileName">Full name</label>
@@ -87,7 +101,12 @@
                 <input id="profileEmail" name="email" type="email" autocomplete="email" />
               </div>
               <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
-              <button class="btn btn-primary" type="submit">Save changes</button>
+              
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Save changes</button>
+                <!-- إضافة زرار Cancel -->
+                <button id="cancelEditBtn" class="btn btn-outline" type="button">Cancel</button>
+              </div>
             </form>
           </section>
         </div>
