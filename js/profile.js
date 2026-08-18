@@ -1,17 +1,35 @@
-// متغير حفظ بيانات المستخدم الحالي
+// متغير حفظ بيانات المستخدم الحالي// متغير حفظ بيانات المستخدم الحالي
 var currentUser = null;
 
-// تشغيل جلب البيانات عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function () {
+  // 1. تحميل بيانات البروفايل عند فتح الصفحة
   loadProfile();
+
+  // 2. ربط الـ Submit Event للـ Form داخل الـ DOMContentLoaded
+  var form = document.getElementById('profileForm');
+  if (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      saveProfile();
+    });
+  }
+
+  // 3. ربط زرار Edit Profile باستدعاء دالة showEditForm
+  var editBtn = document.getElementById('editProfileBtn');
+  if (editBtn) {
+    editBtn.addEventListener('click', function () {
+      if (currentUser) {
+        showEditForm(currentUser);
+      }
+    });
+  }
 });
 
-// 1. loadProfile() -> تجيب الـ current user بـ ccGetCurrentUser()
+// 1. loadProfile()
 function loadProfile() {
   currentUser = ccGetCurrentUser();
 
   if (!currentUser) {
-    // توجيه المستخدم لصفحة الدخول لو مش عامل Login
     window.location.href = 'login.html';
     return;
   }
@@ -19,34 +37,41 @@ function loadProfile() {
   renderProfile(currentUser);
 }
 
-// 2. renderProfile(user) -> تعرض بيانات المستخدم في الصفحة
+// 2. renderProfile(user)
 function renderProfile(user) {
-  var nameInput = document.getElementById('profileName');
-  var emailInput = document.getElementById('profileEmail');
   var summaryName = document.getElementById('profileSummaryName');
   var summaryEmail = document.getElementById('profileSummaryEmail');
   var avatar = document.getElementById('profileAvatar');
   var role = document.getElementById('profileRole');
+  var viewName = document.getElementById('viewName');
+  var viewEmail = document.getElementById('viewEmail');
 
-  if (nameInput) nameInput.value = user.name || '';
-  if (emailInput) emailInput.value = user.email || '';
   if (summaryName) summaryName.textContent = user.name || 'CinemaConnect member';
   if (summaryEmail) summaryEmail.textContent = user.email || '';
   if (avatar) avatar.textContent = (user.name || 'C').charAt(0).toUpperCase();
   if (role) role.textContent = user.role === 'admin' ? 'Administrator' : 'Member';
+  
+  if (viewName) viewName.textContent = user.name || '';
+  if (viewEmail) viewEmail.textContent = user.email || '';
 }
 
-// 3. showEditForm(user) -> تعرض الـ Edit Form وتملأه بالبيانات
+// 3. showEditForm(user) -> تفعيل وضع التعديل وتعبئة الفورم
 function showEditForm(user) {
-  // تظهر الفورم إذا كان فيه جزء مخفي أو تجهزه للتعديل
   var form = document.getElementById('profileForm');
-  if (form) {
-    form.style.display = 'block';
-  }
-  renderProfile(user);
+  var viewDetails = document.getElementById('profileView');
+  var detailsTitle = document.getElementById('detailsTitle');
+  var nameInput = document.getElementById('profileName');
+  var emailInput = document.getElementById('profileEmail');
+
+  if (nameInput) nameInput.value = user.name || '';
+  if (emailInput) emailInput.value = user.email || '';
+
+  if (detailsTitle) detailsTitle.textContent = 'Edit your profile';
+  if (viewDetails) viewDetails.classList.add('hidden');
+  if (form) form.classList.remove('hidden');
 }
 
-// 4. saveProfile() -> تاخد البيانات الجديدة وتستدعي ccUpdateUser
+// 4. saveProfile()
 function saveProfile() {
   if (!currentUser) return;
 
@@ -62,13 +87,30 @@ function saveProfile() {
   var name = nameInput.value.trim();
   var email = emailInput.value.trim();
 
+  // أ. التحقق من إن الحقول مش فاضية
   if (!name || !email) {
     message.classList.add('error');
     message.textContent = 'Please enter your name and email address.';
     return;
   }
 
-  // تحديث البيانات بحظر الـ ID والـ Role (الاسم والإيميل فقط)
+  // ب. التحقق من صحة صيغة الإيميل (Email Regex Check)
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    message.classList.add('error');
+    message.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
+  // ج. التحقق من تكرار الإيميل لدى مستخدم آخر
+  var existingUser = ccFindUserByEmail(email);
+  if (existingUser && existingUser.id !== currentUser.id) {
+    message.classList.add('error');
+    message.textContent = 'This email is already in use by another account.';
+    return;
+  }
+
+  // د. تحديث بيانات المستخدم
   var updatedUser = ccUpdateUser(currentUser.id, {
     name: name,
     email: email
@@ -82,15 +124,12 @@ function saveProfile() {
 
   currentUser = updatedUser;
   renderProfile(currentUser);
+
+  // هـ. تحديث الشريط العلوي (Navbar) مباشرة بعد التعديل
+  if (typeof ccRenderNav === 'function') {
+    ccRenderNav('profile');
+  }
+
   message.classList.add('success');
   message.textContent = 'Profile updated successfully.';
-}
-
-// ربط الـ Submit بتاع الفورم بالدالة saveProfile
-var form = document.getElementById('profileForm');
-if (form) {
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    saveProfile();
-  });
 }

@@ -5,28 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CinemaConnect · Profile</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      .hidden {
+        display: none !important;
+      }
+      .profile-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
       <nav class="navbar">
-        <a href="index.html" class="brand"
-          >CINEMA<span class="dot">•</span>CONNECT</a
-        >
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-          ☰
-        </button>
+        <a href="index.html" class="brand">CINEMA<span class="dot">•</span>CONNECT</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
         <ul class="nav-links" id="navLinks">
           <li><a href="index.html" data-page="home">Home</a></li>
           <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
           <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
           <li>
-            <a
-              href="admin.html"
-              data-page="admin"
-              id="adminNavLink"
-              class="hidden"
-              >Admin</a
-            >
+            <a href="admin.html" data-page="admin" id="adminNavLink" class="hidden">Admin</a>
           </li>
         </ul>
         <div class="nav-cta" id="navCta"></div>
@@ -45,29 +46,45 @@
         </div>
 
         <div class="profile-layout">
+          <!-- Profile Summary -->
           <aside class="profile-summary">
             <div class="profile-avatar" id="profileAvatar" aria-hidden="true"></div>
             <p class="profile-summary-label">Signed in as</p>
             <h2 id="profileSummaryName"></h2>
             <p id="profileSummaryEmail"></p>
             <span class="profile-role" id="profileRole"></span>
+
+            <!-- زرار My Bookings المضاف حسب الـ Spec -->
+            <div class="profile-actions">
+              <a href="bookings.html" class="btn btn-outline btn-sm">My Bookings</a>
+              <button id="editProfileBtn" class="btn btn-secondary btn-sm" type="button">Edit Profile</button>
+            </div>
           </aside>
 
+          <!-- Profile Panel -->
           <section class="profile-panel" aria-labelledby="detailsTitle">
             <div class="section-head">
               <div>
                 <p class="eyebrow">Account details</p>
-                <h2 id="detailsTitle">Edit your profile</h2>
+                <h2 id="detailsTitle">Account Overview</h2>
               </div>
             </div>
-            <form id="profileForm" novalidate>
+
+            <!-- Profile View Details -->
+            <div id="profileView" class="profile-view-details">
+              <p><strong>Full Name:</strong> <span id="viewName"></span></p>
+              <p><strong>Email Address:</strong> <span id="viewEmail"></span></p>
+            </div>
+
+            <!-- Profile Form (مخفي افتراضياً لحين ضغط Edit Profile) -->
+            <form id="profileForm" class="hidden" novalidate>
               <div class="form-field">
                 <label for="profileName">Full name</label>
-                <input id="profileName" name="name" type="text" autocomplete="name" required />
+                <input id="profileName" name="name" type="text" autocomplete="name" />
               </div>
               <div class="form-field">
                 <label for="profileEmail">Email address</label>
-                <input id="profileEmail" name="email" type="email" autocomplete="email" required />
+                <input id="profileEmail" name="email" type="email" autocomplete="email" />
               </div>
               <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
               <button class="btn btn-primary" type="submit">Save changes</button>
