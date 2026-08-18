@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CinemaConnect · Movie Details</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* ---- page-specific styles: Movie Details ---- */
+      .details-banner {
+        height: 340px;
+        background-size: cover;
+        background-position: center;
+        background-color: var(--ink-2);
+        position: relative;
+      }
+
+      .details-banner-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(14, 16, 22, 0.2) 0%,
+          var(--ink) 100%
+        );
+      }
+
+      @media (max-width: 640px) {
+        .details-banner {
+          height: 220px;
+        }
+      }
+
+      .details-body {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 32px;
+        margin-top: -120px;
+        position: relative;
+        z-index: 1;
+        padding-bottom: 40px;
+      }
+
+      @media (max-width: 720px) {
+        .details-body {
+          grid-template-columns: 1fr;
+          margin-top: -80px;
+        }
+      }
+
+      .details-poster img {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        display: block;
+      }
+
+      .details-info h1 {
+        font-family: var(--f-display);
+        font-size: 42px;
+        margin: 4px 0 12px;
+        letter-spacing: 0.02em;
+      }
+
+      .details-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        color: var(--paper-dim);
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      .details-desc {
+        color: var(--paper-dim);
+        max-width: 640px;
+        margin-bottom: 24px;
+      }
+
+      .details-showtimes h3,
+      .trailer-section h3 {
+        font-family: var(--f-display);
+        font-size: 20px;
+        letter-spacing: 0.03em;
+        margin: 0 0 10px;
+        color: var(--gold);
+      }
+
+      .showtime-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .showtime-chip {
+        border: 1px solid rgba(241, 237, 228, 0.25);
+        border-radius: 6px;
+        padding: 8px 14px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .details-price {
+        margin-bottom: 20px;
+        font-size: 15px;
+      }
+
+      .details-price strong {
+        color: var(--gold);
+      }
+
+      .trailer-section {
+        padding-top: 8px;
+      }
+
+      .trailer-wrap {
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--ink-2);
+      }
+
+      .trailer-wrap video {
+        width: 100%;
+        max-height: 520px;
+        display: block;
+      }
+
+      .trailer-fallback {
+        margin: 0;
+        padding: 40px 20px;
+        text-align: center;
+        color: var(--paper-dim);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar">
+        <a href="index.html" class="brand"
+          >CINEMA<span class="dot">•</span>CONNECT</a
+        >
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          ☰
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
+          <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
+          <li>
+            <a
+              href="admin.html"
+              data-page="admin"
+              id="adminNavLink"
+              class="hidden"
+              >Admin</a
+            >
+          </li>
+        </ul>
+        <div class="nav-cta" id="navCta"></div>
+      </nav>
+      <div class="filmstrip-rule"></div>
+    </header>
+
+    <main id="detailsMain">
+      <!-- filled by js/movie-details.js -->
+    </main>
+
+    <footer class="site-footer">
+      <div class="filmstrip-rule flip"></div>
+      <div class="container">
+        CinemaConnect · Web Development Summer Training 2026.
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/movie-details.js"></script>
+    <script>
+      ccRenderNav('movie-details');
+    </script>
+  </body>
+</html>
