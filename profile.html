@@ -70,7 +70,6 @@
 
             <div class="profile-actions">
               <a href="bookings.html" class="btn btn-outline btn-sm">My Bookings</a>
-              <!-- تم تعديل الكلاس إلى btn-outline ليتناسب مع style.css -->
               <button id="editProfileBtn" class="btn btn-outline btn-sm" type="button">Edit Profile</button>
             </div>
           </aside>
@@ -83,6 +82,9 @@
                 <h2 id="detailsTitle">Account Overview</h2>
               </div>
             </div>
+
+            <!-- مكان رسالة النجاح والخطأ في مكان ثابت لا يتأثر بالإخفاء -->
+            <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
 
             <!-- Profile View Details -->
             <div id="profileView" class="profile-view-details">
@@ -100,11 +102,9 @@
                 <label for="profileEmail">Email address</label>
                 <input id="profileEmail" name="email" type="email" autocomplete="email" />
               </div>
-              <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
               
               <div class="form-actions">
                 <button class="btn btn-primary" type="submit">Save changes</button>
-                <!-- إضافة زرار Cancel -->
                 <button id="cancelEditBtn" class="btn btn-outline" type="button">Cancel</button>
               </div>
             </form>

@@ -72,6 +72,7 @@ function showEditForm(user) {
   var emailInput = document.getElementById('profileEmail');
   var message = document.getElementById('profileMessage');
 
+  // تنظيف الرسائل القديمة وقت دخول وضع التعديل
   if (message) {
     message.textContent = '';
     message.className = 'form-message';
@@ -150,11 +151,14 @@ function saveProfile() {
   currentUser = updatedUser;
   renderProfile(currentUser);
 
-  // هـ. تحديث الشريط العلوي (Navbar)
+  // هـ. تحديث الشريط العلوي (Navbar) مباشرة
   if (typeof ccRenderNav === 'function') {
     ccRenderNav('profile');
   }
 
-  // و. العودة لوضع العرض وتأكيد التحديث
+  // و. كتابة رسالة النجاح والرجوع لوضع العرض
+  message.classList.add('success');
+  message.textContent = 'Profile updated successfully.';
+
   showViewMode();
 }
