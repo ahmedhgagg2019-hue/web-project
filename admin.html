@@ -6,7 +6,178 @@
     <title>CinemaConnect · Admin Panel</title>
     <link rel="stylesheet" href="style.css" />
     <style>
+      :root {
+        --panel:#1A1D29;
+        --panel-line:rgba(241,237,228,0.10);
+        --radius: 10px;
+        --radius-sm: 6px;
+        --f-mono: 'JetBrains Mono', 'Courier New', monospace;
+        --marquee-2:  #E2503F;
+      }
+      
+      .toolbar { 
+        display:flex; 
+        justify-content:space-between; 
+        align-items:center; 
+        margin-bottom: 20px; 
+        gap: 12px; 
+        flex-wrap:wrap; }
 
+      .section-title small { 
+        display:block; 
+        font-family: var(--f-mono); 
+        font-size: 12px; 
+        color: var(--gold); 
+        text-transform: uppercase; 
+        letter-spacing: .1em; 
+        margin-bottom: 4px; 
+      }
+
+      .table-style { 
+        overflow-x:auto; 
+        border: 1px solid var(--panel-line); 
+        border-radius: var(--radius);
+        }
+
+      table { 
+        width:100%; 
+        border-collapse: collapse; 
+        font-size: 14px; 
+      }
+      th, td { 
+        padding: 12px 14px; 
+        text-align:left; 
+        border-bottom: 1px solid var(--panel-line); 
+        white-space:nowrap; 
+      }
+      th { 
+        font-family: var(--f-mono); 
+        font-size: 11px; 
+        text-transform:uppercase; 
+        letter-spacing:.06em; 
+        color: var(--paper-dim); 
+        background: var(--ink-2); 
+      }
+      tr:last-child td { 
+        border-bottom:none; 
+      }
+      
+      .modal-backdrop {
+        position:fixed; 
+        inset:0; 
+        background: rgba(14,16,22,.72); 
+        z-index:100;
+        display:none; 
+        align-items:center; 
+        justify-content:center; 
+        padding: 20px;
+      }
+
+      .modal-backdrop.open { 
+        display:flex; 
+      }
+
+      .modal {
+        background: var(--panel); 
+        border: 1px solid var(--panel-line); 
+        border-radius: var(--radius);
+        width: 100%;
+        max-width: 520px; 
+        max-height: 88vh; 
+        overflow-y:auto; 
+        padding: 28px;
+      }
+
+      .modal h3 { 
+        font-size: 24px; 
+        margin-bottom: 18px;
+      }
+
+      .modal-close { 
+        float:right; 
+        background:none; 
+        border:none; 
+        color: var(--paper-dim); 
+        font-size: 20px; 
+        cursor:pointer;
+      }
+
+      .grid-2 { 
+        display:grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 14px;
+      }
+      @media (max-width:480px){ .grid-2{ grid-template-columns: 1fr; } }
+
+      .btn-block { 
+        width: 100%; 
+      }
+
+      .btn-ghost { 
+        background: transparent; 
+        color: var(--paper); 
+        border-color: var(--panel-line); 
+      }
+
+      .btn-ghost:hover { 
+        border-color: var(--gold); 
+        color: var(--gold); 
+      }
+
+      .btn-danger { 
+        background: transparent; 
+        color: var(--marquee-2); 
+        border-color: var(--marquee-2); 
+      }
+      
+      .btn-danger:hover { 
+        background: var(--marquee); 
+        color: var(--paper); 
+      }
+
+      .rating-stars { 
+        color: var(--gold); 
+        font-family: var(--f-mono); 
+        font-size: 14px; 
+      }
+
+      .tag-empty { 
+        text-align:center;
+        padding: 40px 0; 
+        color: var(--paper-dim); 
+      }
+
+      .form-group { 
+        margin-bottom: 18px; 
+        display:flex; 
+        flex-direction:column; 
+        gap: 6px; 
+      }
+
+      .form-group label { 
+        font-size: 13px; 
+        font-weight:600; 
+        color: var(--paper); 
+      }
+
+      input, select, textarea {
+        background: var(--ink-2); 
+        border: 1px solid var(--panel-line); 
+        color: var(--paper);
+        padding: 10px 12px; 
+        border-radius: var(--radius-sm); 
+        font-family: var(--f-body); 
+        font-size: 14px;
+      } 
+
+      input::placeholder { 
+        color: rgba(241,237,228,0.35); 
+      }
+
+      input:focus, select:focus, textarea:focus { 
+        border-color: var(--gold); 
+      }
+      
     </style>
 </head>
 <body>
@@ -37,9 +208,91 @@
       <div class="filmstrip-rule"></div>
     </header>
 
-    <main>
+    <main class="container section">
+      
+      <!-- el toolbar ely fo2 el table -->
+      <div class="toolbar">
+        <div class="section-title">
+          <small> Manage Content </small>
+          Admin Panel
+        </div>
+        <button class="btn btn-primary" id="AddMovieBtn">
+          + Add Movie
+        </button>
+      </div>
 
+      <!-- el table -->
+      <div class="table-style">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Genre</th>
+              <th>Release Date</th>
+              <th>Rating</th>
+              <th>Showtimes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="TableBody"> </tbody>
+        </table>
+      </div>
     </main>
+
+    <!-- el edit modal -->
+    <div class="modal-backdrop" id="movieModal">
+      <div class="modal">
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+        <h3 id="modalTitle">Add Movie</h3>
+        <form id="movieForm">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Title</label><input type="text" name="title" required />
+            </div>
+            <div class="form-group">
+              <label>Genre</label><input type="text" name="genre" required />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Rating (0–10)</label><input type="number" name="rating" min="0" max="10" step="0.1" required />
+            </div>
+            <div class="form-group">
+              <label>Duration</label><input type="number" name="duration" placeholder="100" required />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Price</label><input type="number" name="price" required />
+            </div>
+            <div class="form-group">
+              <label>Release Date</label><input type="date" name="releaseDate" placeholder="2026-07-10" required />
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label>Description</label><textarea name="description" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Showtimes (comma-separated)</label><input type="text" name="showtimes" placeholder="13:00, 19:30, 23:00" required />
+          </div>
+          <div class="form-group">
+            <label>Poster Image Path (optional)</label><input type="text" name="poster" placeholder="images/posters/evil-dead-burn.jpg" />
+          </div>
+          <div class="form-group">
+            <label>Banner Image Path (optional)</label><input type="text" name="banner" placeholder="images/banners/evil-dead-burn-banner.jpg" />
+          </div>
+
+
+          <button class="btn btn-primary btn-block">Save Movie</button>
+
+
+        </form>
+      </div>
+    </div>
 
     <footer class="site-footer">
       <div class="filmstrip-rule flip"></div>
@@ -50,8 +303,10 @@
 
     <script src="js/data.js"></script>
     <script src="js/nav.js"></script>
+    <script src="js/admin.js"></script>
     <script>
         ccRenderNav('admin');
+        ccInitAdmin();
     </script>
 </body>
 </html>
