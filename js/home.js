@@ -23,7 +23,10 @@ function ccInitHeroSlider() {
   var allMovies = ccGetMoviesSafe();
   var slidesData = [];
   for (var i = 0; i < allMovies.length; i++) {
-    if (typeof allMovies[i].banner === 'string' && allMovies[i].banner.trim() !== '') {
+    if (
+      typeof allMovies[i].banner === 'string' &&
+      allMovies[i].banner.trim() !== ''
+    ) {
       slidesData.push(allMovies[i]);
     }
     if (slidesData.length === 8) {
@@ -45,10 +48,18 @@ function ccInitHeroSlider() {
     var movie = slidesData[s];
     var tag = ccIsUpcoming(movie) ? 'Coming Soon' : 'Now Showing';
     slidesHtml +=
-      '<div class="slide" style="background-image:url(\'' + movie.banner + '\')">' +
+      '<div class="slide" style="background-image:url(\'' +
+      movie.banner +
+      '\')">' +
       '<div class="slide-caption">' +
-      '<h3>' + movie.title + '</h3>' +
-      '<p>' + movie.genre + ' · ' + tag + '</p>' +
+      '<h3>' +
+      movie.title +
+      '</h3>' +
+      '<p>' +
+      movie.genre +
+      ' · ' +
+      tag +
+      '</p>' +
       '</div>' +
       '</div>';
   }
@@ -73,7 +84,7 @@ function ccInitHeroSlider() {
 
   var index = 0;
   var autoplayId = null;
-// el function di bt3ml render lel slider, bta5od el index ely 3ayz tshow feh w t7ot el transform bta3 el track 3la 7sb el index, w kaman bt3ml highlight lel dot elly mwgoda feh
+  // el function di bt3ml render lel slider, bta5od el index ely 3ayz tshow feh w t7ot el transform bta3 el track 3la 7sb el index, w kaman bt3ml highlight lel dot elly mwgoda feh
   function render() {
     track.style.transform = 'translateX(-' + index * 100 + '%)';
     for (var i = 0; i < dots.length; i++) {
@@ -84,31 +95,31 @@ function ccInitHeroSlider() {
       }
     }
   }
-// el function di bt3ml go to lel slide ely 3ayz tshow bta5od el index w t7ot el index 3la 7sb el slides length w bt3ml render
+  // el function di bt3ml go to lel slide ely 3ayz tshow bta5od el index w t7ot el index 3la 7sb el slides length w bt3ml render
   function goTo(i) {
     index = (i + slides.length) % slides.length;
     render();
   }
-// el function di bt3ml go to lel slide ely ba3d el current index
+  // el function di bt3ml go to lel slide ely ba3d el current index
   function next() {
     goTo(index + 1);
   }
-//  el function di bt3ml go to lel slide ely abl el current index
+  //  el function di bt3ml go to lel slide ely abl el current index
   function prev() {
     goTo(index - 1);
   }
-// el function di bt3ml start lel autoplay, bt3ml stop lw mwgoda w b3d kda bt3ml setInterval lel next every 5 seconds
+  // el function di bt3ml start lel autoplay, bt3ml stop lw mwgoda w b3d kda bt3ml setInterval lel next every 5 seconds
   function startAutoplay() {
     stopAutoplay();
     autoplayId = setInterval(next, 5000);
   }
-// el function di bt3ml stop lel autoplay, lw mwgoda bt3ml clearInterval
+  // el function di bt3ml stop lel autoplay, lw mwgoda bt3ml clearInterval
   function stopAutoplay() {
     if (autoplayId) {
       clearInterval(autoplayId);
     }
   }
-// el event listeners lel prev w next buttons, lw mwgoda, w kaman el mouse enter w leave 3la el slider 3shan ywa2f w ybda2 autoplay
+  // el event listeners lel prev w next buttons, lw mwgoda, w kaman el mouse enter w leave 3la el slider 3shan ywa2f w ybda2 autoplay
   if (prevBtn) {
     prevBtn.addEventListener('click', function () {
       prev();
@@ -156,11 +167,21 @@ function ccRenderFeaturedMovies() {
 
     html +=
       '<article class="movie-card">' +
-      '<div class="movie-poster" style="background-image:url(\'' + movie.poster + '\')"></div>' +
+      '<div class="movie-poster" style="background-image:url(\'' +
+      movie.poster +
+      '\')"></div>' +
       '<div class="movie-info">' +
-      '<h3>' + movie.title + '</h3>' +
-      '<p class="movie-meta' + (upcoming ? ' upcoming' : '') + '">' + meta + '</p>' +
-      '<a class="btn btn-primary btn-sm" href="browse.html">Book Now</a>' +
+      '<h3>' +
+      movie.title +
+      '</h3>' +
+      '<p class="movie-meta' +
+      (upcoming ? ' upcoming' : '') +
+      '">' +
+      meta +
+      '</p>' +
+      '<a class="btn btn-primary btn-sm" href="movie-details.html?movieId=' +
+      movie.id +
+      '">Book Now</a>' +
       '</div>' +
       '</article>';
   }
