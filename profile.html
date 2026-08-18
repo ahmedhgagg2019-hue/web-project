@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CinemaConnect · Profile</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar">
+        <a href="index.html" class="brand"
+          >CINEMA<span class="dot">•</span>CONNECT</a
+        >
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          ☰
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
+          <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
+          <li>
+            <a
+              href="admin.html"
+              data-page="admin"
+              id="adminNavLink"
+              class="hidden"
+              >Admin</a
+            >
+          </li>
+        </ul>
+        <div class="nav-cta" id="navCta"></div>
+      </nav>
+      <div class="filmstrip-rule"></div>
+    </header>
+
+    <main>
+      <section class="profile-page container">
+        <div class="profile-heading">
+          <p class="eyebrow">Your CinemaConnect account</p>
+          <h1>Profile</h1>
+          <p class="profile-intro">
+            Keep your details current so your next movie night starts smoothly.
+          </p>
+        </div>
+
+        <div class="profile-layout">
+          <aside class="profile-summary">
+            <div class="profile-avatar" id="profileAvatar" aria-hidden="true"></div>
+            <p class="profile-summary-label">Signed in as</p>
+            <h2 id="profileSummaryName"></h2>
+            <p id="profileSummaryEmail"></p>
+            <span class="profile-role" id="profileRole"></span>
+          </aside>
+
+          <section class="profile-panel" aria-labelledby="detailsTitle">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Account details</p>
+                <h2 id="detailsTitle">Edit your profile</h2>
+              </div>
+            </div>
+            <form id="profileForm" novalidate>
+              <div class="form-field">
+                <label for="profileName">Full name</label>
+                <input id="profileName" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label for="profileEmail">Email address</label>
+                <input id="profileEmail" name="email" type="email" autocomplete="email" required />
+              </div>
+              <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
+              <button class="btn btn-primary" type="submit">Save changes</button>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="filmstrip-rule flip"></div>
+      <div class="container">
+        CinemaConnect · Web Development Summer Training 2026.
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/profile.js"></script>
+    <script>
+      ccRenderNav('profile');
+    </script>
+  </body>
+</html>
