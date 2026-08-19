@@ -13,17 +13,20 @@ function formatDuration(minutes) {
 
 function loadMovies() {
   allMovies = ccGetMovies();
+
   fillGenreFilter(allMovies);
   renderMovies(allMovies);
 }
 
 function fillGenreFilter(movies) {
   const genres = [];
+
   movies.forEach((movie) => {
     if (movie.genre && !genres.includes(movie.genre)) {
       genres.push(movie.genre);
     }
   });
+
   genres.forEach((genre) => {
     const option = document.createElement('option');
     option.value = genre;
@@ -49,7 +52,7 @@ function renderMovies(movies) {
     if (upcoming) {
       genreLine = `${movie.genre} · Coming Soon`;
     } else {
-      const ratingText = movie.rating ? movie.rating : '—';
+      const ratingText = movie.rating ? movie.rating.toFixed(1) : '—';
       genreLine = `${movie.genre} · ★ ${ratingText}`;
     }
 
@@ -70,24 +73,34 @@ function renderMovies(movies) {
   });
 }
 
-function searchMovies() {
+function applyFilters() {
   const query = searchInputEl.value.toLowerCase().trim();
-  const filtered = allMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(query),
-  );
+  const genre = genreFilterEl.value;
+
+  let filtered = allMovies;
+
+  if (genre !== 'all') {
+    filtered = filtered.filter((movie) => movie.genre === genre);
+  }
+
+  if (query) {
+    filtered = filtered.filter((movie) =>
+      movie.title.toLowerCase().includes(query),
+    );
+  }
+
   renderMovies(filtered);
 }
 
+function searchMovies() {
+  applyFilters();
+}
+
 function filterMovies() {
-  const genre = genreFilterEl.value;
-  if (genre === 'all') {
-    renderMovies(allMovies);
-    return;
-  }
-  const filtered = allMovies.filter((movie) => movie.genre === genre);
-  renderMovies(filtered);
+  applyFilters();
 }
 
 searchInputEl.addEventListener('input', searchMovies);
 genreFilterEl.addEventListener('change', filterMovies);
+
 document.addEventListener('DOMContentLoaded', loadMovies);

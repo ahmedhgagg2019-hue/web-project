@@ -169,6 +169,19 @@ function ccRenderFeaturedMovies() {
       meta = movie.genre + ' · ★ ' + ratingText;
     }
 
+    var bookingAction;
+    if (upcoming) {
+      bookingAction =
+        '<button type="button" class="btn btn-outline btn-sm" disabled>' +
+        'Coming Soon' +
+        '</button>';
+    } else {
+      bookingAction =
+        '<a class="btn btn-primary btn-sm" href="booking.html?movieId=' +
+        movie.id +
+        '">Book Now</a>';
+    }
+
     html +=
       '<article class="movie-card">' +
       '<div class="movie-poster" style="background-image:url(\'' +
@@ -183,9 +196,7 @@ function ccRenderFeaturedMovies() {
       '">' +
       meta +
       '</p>' +
-      '<a class="btn btn-primary btn-sm" href="booking.html?movieId=' +
-      movie.id +
-      '">Book Now</a>' +
+      bookingAction +
       '</div>' +
       '</article>';
   }

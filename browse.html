@@ -6,6 +6,8 @@
 <title>CinemaConnect · Browse Movies</title>
 <link rel="stylesheet" href="style.css" />
 <style>
+
+
   .bm-controls {
     display: flex;
     flex-wrap: wrap;
@@ -70,7 +72,7 @@
 <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
 <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
 <li>
-
+<a
 href="admin.html"
 data-page="admin"
 id="adminNavLink"
@@ -88,20 +90,21 @@ class="hidden"
 
   <section class="container section">
 
+
     <div class="section-head">
       <div class="section-title">Browse Movies</div>
     </div>
     <p class="hero-sub">Search and filter through all the movies available on CinemaConnect.</p>
 
     <div class="bm-controls">
-      <input type="text" id="searchInput" placeholder="Search movies...">
-      <select id="genreFilter">
+      <input type="text" id="searchInput" placeholder="Search movies..." aria-label="Search movies by title">
+      <select id="genreFilter" aria-label="Filter movies by genre">
         <option value="all">All Genres</option>
       </select>
     </div>
 
     <div class="movie-grid" id="moviesGrid">
-      <!-- filled by js/browse.js -->
+
     </div>
 
   </section>
