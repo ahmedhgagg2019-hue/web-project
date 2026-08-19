@@ -47,7 +47,7 @@ function ccOpenMovieModal(id) {
         form.genre.value = m.genre;
         form.releaseDate.value = m.releaseDate;
         form.duration.value = m.duration;
-        form.rating.value = m.rating;
+        form.rating.value = m.rating != null ? m.rating : '';
         form.description.value = m.description;
         form.showtimes.value = m.showtimes.join(', ');
         form.poster.value = m.poster;
@@ -68,13 +68,13 @@ function ccSubmitMovieForm(e) {
         title: form.title.value.trim(),
         genre: form.genre.value.trim(),
         releaseDate: form.releaseDate.value,
-        duration: form.duration.value.trim(),
+        duration: parseInt(form.duration.value) || 1,
         rating: Math.max(0, Math.min(10, parseFloat(form.rating.value) || 0)), // || 0 3ashan momken ya3mel NaN
         description: form.description.value.trim(),
         showtimes: form.showtimes.value.split(',').map(s => s.trim()).filter(Boolean), // split ba3daha trim le ay whitespaces ba3daha filter any empty parts
         poster: form.poster.value.trim() || 'images/posters/evil-dead-burn.jpg',
         banner: form.banner.value.trim() || 'images/banners/evil-dead-burn-banner.jpg',
-        price: form.price.value.trim()
+        price: parseFloat(form.price.value) || 1
     };
 
     if (!info.title || !info.genre || !info.showtimes.length) {
