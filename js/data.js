@@ -141,64 +141,41 @@ var CC_SEED_ADMIN = {
   role: 'admin',
 };
 
-//el function deh bet3amel init lel data law mafeesh data metsayva fel localStorage
-function ccInitData() {
-  var storedMoviesText = localStorage.getItem(CC_KEYS.MOVIES);
-  var storedMovies = storedMoviesText ? JSON.parse(storedMoviesText) : null;
+// function to read array from localStorage
+function ccReadArray(key) {
+  try {
+    var text = localStorage.getItem(key);
 
-  if (!Array.isArray(storedMovies)) {
-    // law mafeesh data metsave3a abl keda ne7ot el seed data
-    localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(CC_SEED_MOVIES));
-  } else {
-    var finalMovies = [];
-
-    for (var i = 0; i < CC_SEED_MOVIES.length; i++) {
-      var seedMovie = CC_SEED_MOVIES[i];
-      var savedVersion = null;
-
-      for (var j = 0; j < storedMovies.length; j++) {
-        if (storedMovies[j].id === seedMovie.id) {
-          savedVersion = storedMovies[j];
-          break;
-        }
-      }
-
-      var mergedMovie = {};
-      // n3ml merge ben el seed movie w el saved version law mwgoda
-      for (var key in seedMovie) {
-        mergedMovie[key] = seedMovie[key];
-      }
-      // law mwgoda saved version n3ml override lel keys ely mwgoda fel seed movie
-      if (savedVersion) {
-        for (var key2 in savedVersion) {
-          mergedMovie[key2] = savedVersion[key2];
-        }
-      }
-      finalMovies.push(mergedMovie);
+    if (!text) {
+      return null;
     }
 
-    // el movies el et3amlet add mn el admin page w msh mawgooda fel seed list hanseebha
-    for (var k = 0; k < storedMovies.length; k++) {
-      var isSeedMovie = false;
-      for (var s = 0; s < CC_SEED_MOVIES.length; s++) {
-        if (CC_SEED_MOVIES[s].id === storedMovies[k].id) {
-          isSeedMovie = true;
-          break;
-        }
-      }
-      if (!isSeedMovie) {
-        finalMovies.push(storedMovies[k]);
-      }
+    var data = JSON.parse(text);
+
+    if (Array.isArray(data)) {
+      return data;
     }
-    // save el final movies fel localStorage
-    localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(finalMovies));
+
+    return null;
+  } catch (error) {
+    return null;
   }
-  // check law mafeesh users fel localStorage ne7ot el admin account
-  if (!localStorage.getItem(CC_KEYS.USERS)) {
+}
+
+// bte7ot el seed data mara wa7da bas law mafeesh data metsave3a
+function ccInitData() {
+  var storedMovies = ccReadArray(CC_KEYS.MOVIES);
+  if (storedMovies === null) {
+    localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(CC_SEED_MOVIES));
+  }
+
+  var storedUsers = ccReadArray(CC_KEYS.USERS);
+  if (storedUsers === null) {
     localStorage.setItem(CC_KEYS.USERS, JSON.stringify([CC_SEED_ADMIN]));
   }
-  // check law mafeesh bookings fel localStorage ne7ot array fadya
-  if (!localStorage.getItem(CC_KEYS.BOOKINGS)) {
+
+  var storedBookings = ccReadArray(CC_KEYS.BOOKINGS);
+  if (storedBookings === null) {
     localStorage.setItem(CC_KEYS.BOOKINGS, JSON.stringify([]));
   }
 }
@@ -207,7 +184,7 @@ ccInitData();
 // ---- functions bta3et el movies ----
 // get el movies mn el localStorage
 function ccGetMovies() {
-  return JSON.parse(localStorage.getItem(CC_KEYS.MOVIES) || '[]');
+  return ccReadArray(CC_KEYS.MOVIES) || [];
 }
 // save el movies fel localStorage
 function ccSaveMovies(movies) {
@@ -227,7 +204,7 @@ function ccGetMovieById(id) {
 function ccAddMovie(movie) {
   var movies = ccGetMovies();
   if (!movie.id) {
-    movie.id = 'm' + Date.now();
+    movie.id = 'm' + Date.now() + '_' + Math.floor(Math.random() * 1000);
   }
   movies.push(movie);
   ccSaveMovies(movies);
@@ -270,7 +247,7 @@ var ccMovies = ccGetMovies();
 // ---- users w login/register ----
 // get el users mn el localStorage
 function ccGetUsers() {
-  return JSON.parse(localStorage.getItem(CC_KEYS.USERS) || '[]');
+  return ccReadArray(CC_KEYS.USERS) || [];
 }
 // save el users fel localStorage
 function ccSaveUsers(users) {
@@ -353,7 +330,15 @@ function ccGetCurrentUser() {
   if (!sessionText) {
     return null;
   }
-  var session = JSON.parse(sessionText);
+
+  var session;
+  try {
+    session = JSON.parse(sessionText);
+  } catch (error) {
+    localStorage.removeItem(CC_KEYS.SESSION);
+    return null;
+  }
+
   var users = ccGetUsers();
   for (var i = 0; i < users.length; i++) {
     if (users[i].id === session.userId) {
@@ -366,7 +351,7 @@ function ccGetCurrentUser() {
 // ---- bookings ----
 // get el bookings mn el localStorage
 function ccGetBookings() {
-  return JSON.parse(localStorage.getItem(CC_KEYS.BOOKINGS) || '[]');
+  return ccReadArray(CC_KEYS.BOOKINGS) || [];
 }
 // save el bookings fel localStorage
 function ccSaveBookings(bookings) {
@@ -375,7 +360,7 @@ function ccSaveBookings(bookings) {
 // add booking
 function ccAddBooking(booking) {
   var bookings = ccGetBookings();
-  booking.id = 'b_' + Date.now();
+  booking.id = 'b_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
   booking.createdAt = new Date().toISOString();
   bookings.push(booking);
   ccSaveBookings(bookings);

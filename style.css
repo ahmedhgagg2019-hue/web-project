@@ -164,6 +164,10 @@ a:hover {
   .nav-toggle {
     display: block;
   }
+
+  .nav-cta a[href='register.html'] {
+    display: none;
+  }
 }
 
 .section {
@@ -566,7 +570,7 @@ a:hover {
 
 @media (max-width: 640px) {
   .slider {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 16 / 9;
   }
 }
 

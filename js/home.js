@@ -162,8 +162,24 @@ function ccRenderFeaturedMovies() {
     if (upcoming) {
       meta = movie.genre + ' · Coming Soon';
     } else {
-      var ratingText = movie.rating ? movie.rating : '—';
+      var ratingText =
+        movie.rating !== undefined && movie.rating !== null
+          ? movie.rating
+          : '—';
       meta = movie.genre + ' · ★ ' + ratingText;
+    }
+
+    var bookingAction;
+    if (upcoming) {
+      bookingAction =
+        '<button type="button" class="btn btn-outline btn-sm" disabled>' +
+        'Coming Soon' +
+        '</button>';
+    } else {
+      bookingAction =
+        '<a class="btn btn-primary btn-sm" href="booking.html?movieId=' +
+        movie.id +
+        '">Book Now</a>';
     }
 
     html +=
@@ -180,9 +196,7 @@ function ccRenderFeaturedMovies() {
       '">' +
       meta +
       '</p>' +
-      '<a class="btn btn-primary btn-sm" href="movie-details.html?movieId=' +
-      movie.id +
-      '">Book Now</a>' +
+      bookingAction +
       '</div>' +
       '</article>';
   }
@@ -193,4 +207,14 @@ function ccRenderFeaturedMovies() {
 document.addEventListener('DOMContentLoaded', function () {
   ccInitHeroSlider();
   ccRenderFeaturedMovies();
+
+  var createAccountBtn = document.getElementById('heroCreateAccount');
+
+  if (
+    createAccountBtn &&
+    typeof ccGetCurrentUser === 'function' &&
+    ccGetCurrentUser()
+  ) {
+    createAccountBtn.style.display = 'none';
+  }
 });
