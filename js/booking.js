@@ -190,7 +190,7 @@ function ccInitBookingPage() {
   ccRenderShowtimes(movie);
 
   document.getElementById('confirmBookingBtn').addEventListener('click', function () {
-    confirmBookingBtn.disabled=true;
+    confirmBtn.disabled = true;
     if (!ccSelectedShowtime || ccSelectedSeats.length === 0) {
       return;
     }
