@@ -1,3 +1,10 @@
+// Handles Login / Register / Logout UI logic ONLY.
+// All real authentication/session logic lives in data.js:
+//   ccLoginUser(email, password)  -> { ok: true, user }  or { ok: false, error }
+//   ccRegisterUser(data)          -> { ok: true, user }  or { ok: false, error }
+//   ccLogoutUser()                -> clears the session
+//   ccGetCurrentUser()            -> logged-in user object, or null
+
 var EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -20,6 +27,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (registerForm) {
     registerForm.addEventListener('submit', handleRegisterSubmit);
+  }
+
+  // Landed here right after a successful registration (edge case where
+  // auto-login failed) — show a friendly heads-up instead of silence.
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('registered') === 'true') {
+    var successBox = document.getElementById('loginSuccess');
+    if (successBox) {
+      successBox.textContent = 'Account created successfully! Please log in.';
+      successBox.classList.remove('hidden');
+    }
   }
 });
 
@@ -116,8 +134,9 @@ function handleRegisterSubmit(e) {
     window.location.href = 'index.html';
   } else {
     // Account was created but auto-login failed for some reason —
-    // send them to login instead of leaving them stuck on the form.
-    window.location.href = 'login.html';
+    // send them to login instead of leaving them stuck on the form,
+    // with a flag so login.html can tell them why they're there.
+    window.location.href = 'login.html?registered=true';
   }
 }
 
