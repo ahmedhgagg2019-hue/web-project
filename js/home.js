@@ -96,30 +96,36 @@ function ccInitHeroSlider() {
       }
     }
   }
+
   // el function di bt3ml go to lel slide ely 3ayz tshow bta5od el index w t7ot el index 3la 7sb el slides length w bt3ml render
   function goTo(i) {
     index = (i + slides.length) % slides.length;
     render();
   }
+
   // el function di bt3ml go to lel slide ely ba3d el current index
   function next() {
     goTo(index + 1);
   }
+
   //  el function di bt3ml go to lel slide ely abl el current index
   function prev() {
     goTo(index - 1);
   }
+
   // el function di bt3ml start lel autoplay bt3ml stop lw mwgoda w b3d kda bt3ml setInterval lel next every 5 seconds
   function startAutoplay() {
     stopAutoplay();
     autoplayId = setInterval(next, 5000);
   }
+
   // el function di bt3ml stop lel autoplay, lw mwgoda bt3ml clearInterval
   function stopAutoplay() {
     if (autoplayId) {
       clearInterval(autoplayId);
     }
   }
+
   // el event listeners lel prev w next buttons, lw mwgoda, w kaman el mouse enter w leave 3la el slider 3shan ywa2f w ybda2 autoplay
   if (prevBtn) {
     prevBtn.addEventListener('click', function () {
@@ -127,6 +133,7 @@ function ccInitHeroSlider() {
       startAutoplay();
     });
   }
+
   // el event listener lel next button, lw mwgoda
   if (nextBtn) {
     nextBtn.addEventListener('click', function () {
@@ -143,7 +150,7 @@ function ccInitHeroSlider() {
 }
 
 // ----- grid el featured movies -----
-// el function di bt3ml render lel featured movies grid, bta5od awel 4 movies mn el data w t7ot el html bta3hom fe el grid
+// el function di bt3ml render lel featured movies grid, bta5od awel 8 movies mn el data w t7ot el html bta3hom fe el grid
 function ccRenderFeaturedMovies() {
   var grid = document.getElementById('featuredMovies'); // select el grid ely feh el featured movies
   if (!grid) {

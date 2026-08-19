@@ -30,6 +30,7 @@ function ccRenderNav(activePage) {
   }
 
   var user = null;
+  // check if the function ccGetCurrentUser exists before calling it
   if (typeof ccGetCurrentUser === 'function') {
     user = ccGetCurrentUser();
   }
