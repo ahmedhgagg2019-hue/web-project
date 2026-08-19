@@ -56,52 +56,76 @@ function ccRenderMovieDetails() {
 
   document.title = 'CinemaConnect · ' + movie.title;
 
-  var upcoming = typeof ccIsUpcoming === 'function' ? ccIsUpcoming(movie) : false;
+  var upcoming =
+    typeof ccIsUpcoming === 'function' ? ccIsUpcoming(movie) : false;
   var ratingText = movie.rating ? '★ ' + movie.rating : 'Not yet rated';
-  var bannerStyle = movie.banner ? " style=\"background-image:url('" + movie.banner + "')\"" : '';
+  var bannerStyle = movie.banner
+    ? ' style="background-image:url(\'' + movie.banner + '\')"'
+    : '';
 
   // showtimes chips
   var showtimesHtml = '';
   if (movie.showtimes && movie.showtimes.length > 0) {
     for (var i = 0; i < movie.showtimes.length; i++) {
-      showtimesHtml += '<span class="showtime-chip">' + movie.showtimes[i] + '</span>';
+      showtimesHtml +=
+        '<span class="showtime-chip">' + movie.showtimes[i] + '</span>';
     }
   } else {
     showtimesHtml = '<p class="movie-meta">No showtimes scheduled yet.</p>';
   }
 
   var html =
-    '<section class="details-banner"' + bannerStyle + '>' +
+    '<section class="details-banner"' +
+    bannerStyle +
+    '>' +
     '<div class="details-banner-overlay"></div>' +
     '</section>' +
     '<section class="container details-body">' +
     '<div class="details-poster">' +
-    '<img src="' + movie.poster + '" alt="' + movie.title + ' poster" />' +
+    '<img src="' +
+    movie.poster +
+    '" alt="' +
+    movie.title +
+    ' poster" />' +
     '</div>' +
     '<div class="details-info">' +
-    '<p class="eyebrow">' + movie.genre + (upcoming ? ' · Coming Soon' : ' · Now Showing') + '</p>' +
-    '<h1>' + movie.title + '</h1>' +
+    '<p class="eyebrow">' +
+    movie.genre +
+    (upcoming ? ' · Coming Soon' : ' · Now Showing') +
+    '</p>' +
+    '<h1>' +
+    movie.title +
+    '</h1>' +
     '<div class="details-meta-row">' +
-    '<span>' + ratingText + '</span>' +
-    '<span>' + ccFormatDuration(movie.duration) + '</span>' +
-    '<span>Release: ' + ccFormatDate(movie.releaseDate) + '</span>' +
+    '<span>' +
+    ratingText +
+    '</span>' +
+    '<span>' +
+    ccFormatDuration(movie.duration) +
+    '</span>' +
+    '<span>Release: ' +
+    ccFormatDate(movie.releaseDate) +
+    '</span>' +
     '</div>' +
-    '<p class="details-desc">' + movie.description + '</p>' +
+    '<p class="details-desc">' +
+    movie.description +
+    '</p>' +
     '<div class="details-showtimes">' +
     '<h3>Showtimes</h3>' +
-    '<div class="showtime-list">' + showtimesHtml + '</div>' +
+    '<div class="showtime-list">' +
+    showtimesHtml +
     '</div>' +
-    '<div class="details-price">Ticket price: <strong>EGP ' + movie.price + '</strong></div>' +
-    '<a class="btn btn-primary" href="booking.html?movieId=' + movie.id + '">Book Now</a>' +
     '</div>' +
-    '</section>' +
-    
+    '<div class="details-price">Ticket price: <strong>EGP ' +
+    movie.price +
+    '</strong></div>' +
+    '<a class="btn btn-primary" href="booking.html?movieId=' +
+    movie.id +
+    '">Book Now</a>' +
+    '</div>' +
+    '</section>';
 
   main.innerHTML = html;
-
- 
-    });
-  }
 }
 
 document.addEventListener('DOMContentLoaded', ccRenderMovieDetails);
