@@ -30,16 +30,21 @@ function ccBuildSeatMapHtml(bookedSeats) {
   var html = '<div class="seat-map">';
 
   for (var r = 0; r < rows.length; r++) {
-    html += '<div class="seat-row"><span class="row-label">' + rows[r] + '</span>';
+    html +=
+      '<div class="seat-row"><span class="row-label">' + rows[r] + '</span>';
     for (var n = 1; n <= seatsPerRow; n++) {
       var seatId = rows[r] + n;
       var isTaken = bookedSeats.indexOf(seatId) !== -1;
       html +=
         '<button type="button" class="seat' +
         (isTaken ? ' seat-taken' : '') +
-        '" data-seat="' + seatId + '"' +
+        '" data-seat="' +
+        seatId +
+        '"' +
         (isTaken ? ' disabled' : '') +
-        '>' + n + '</button>';
+        '>' +
+        n +
+        '</button>';
     }
     html += '</div>';
   }
@@ -62,7 +67,8 @@ function ccUpdateSummary() {
   seatCountEl.textContent = ccSelectedSeats.length;
   var total = ccSelectedSeats.length * ccCurrentMovie.price;
   totalEl.textContent = 'EGP ' + total;
-  seatListEl.textContent = ccSelectedSeats.length > 0 ? ccSelectedSeats.join(', ') : 'None selected';
+  seatListEl.textContent =
+    ccSelectedSeats.length > 0 ? ccSelectedSeats.join(', ') : 'None selected';
   confirmBtn.disabled = !(ccSelectedShowtime && ccSelectedSeats.length > 0);
 }
 
@@ -70,13 +76,19 @@ function ccUpdateSummary() {
 function ccRenderShowtimes(movie) {
   var wrap = document.getElementById('showtimeSelect');
   if (!movie.showtimes || movie.showtimes.length === 0) {
-    wrap.innerHTML = '<p class="movie-meta">No showtimes scheduled yet for this movie.</p>';
+    wrap.innerHTML =
+      '<p class="movie-meta">No showtimes scheduled yet for this movie.</p>';
     return;
   }
 
   var html = '';
   for (var i = 0; i < movie.showtimes.length; i++) {
-    html += '<button type="button" class="showtime-btn" data-time="' + movie.showtimes[i] + '">' + movie.showtimes[i] + '</button>';
+    html +=
+      '<button type="button" class="showtime-btn" data-time="' +
+      movie.showtimes[i] +
+      '">' +
+      movie.showtimes[i] +
+      '</button>';
   }
   wrap.innerHTML = html;
 
@@ -101,7 +113,8 @@ function ccRenderSeatMap() {
   var seatWrap = document.getElementById('seatMapWrap');
 
   if (!ccSelectedShowtime) {
-    seatWrap.innerHTML = '<p class="movie-meta">Pick a showtime to select your seats.</p>';
+    seatWrap.innerHTML =
+      '<p class="movie-meta">Pick a showtime to select your seats.</p>';
     return;
   }
 
@@ -151,7 +164,8 @@ function ccInitBookingPage() {
   if (!user) {
     main.innerHTML =
       '<div class="container section"><p>Please <a href="login.html">login</a> to book tickets for ' +
-      movie.title + '.</p></div>';
+      movie.title +
+      '.</p></div>';
     return;
   }
 
@@ -161,11 +175,23 @@ function ccInitBookingPage() {
   main.innerHTML =
     '<section class="container section booking-layout">' +
     '<div class="booking-movie-card">' +
-    '<img src="' + movie.poster + '" alt="' + movie.title + ' poster" />' +
+    '<img src="' +
+    movie.poster +
+    '" alt="' +
+    movie.title +
+    ' poster" />' +
     '<div>' +
-    '<h2>' + movie.title + '</h2>' +
-    '<p class="movie-meta">' + movie.genre + ' · ' + movie.duration + ' min</p>' +
-    '<p class="movie-meta">Ticket price: EGP ' + movie.price + '</p>' +
+    '<h2>' +
+    movie.title +
+    '</h2>' +
+    '<p class="movie-meta">' +
+    movie.genre +
+    ' · ' +
+    movie.duration +
+    ' min</p>' +
+    '<p class="movie-meta">Ticket price: EGP ' +
+    movie.price +
+    '</p>' +
     '</div>' +
     '</div>' +
     '<div class="booking-form">' +
@@ -189,41 +215,45 @@ function ccInitBookingPage() {
 
   ccRenderShowtimes(movie);
 
-  document.getElementById('confirmBookingBtn').addEventListener('click', function () {
-    confirmBtn.disabled = true;
-    if (!ccSelectedShowtime || ccSelectedSeats.length === 0) {
-      return;
-    }
-
-    // check en el seats lessa mafeesh 7ad haghazha fel lahza el akhira
-    var stillBooked = ccGetBookedSeatsFor(movie.id, ccSelectedShowtime);
-    for (var i = 0; i < ccSelectedSeats.length; i++) {
-      if (stillBooked.indexOf(ccSelectedSeats[i]) !== -1) {
-        document.getElementById('bookingMsg').textContent =
-          'Sorry, seat ' + ccSelectedSeats[i] + ' was just taken. Please choose again.';
-        ccSelectedSeats = [];
-        ccRenderSeatMap();
-        ccUpdateSummary();
+  document
+    .getElementById('confirmBookingBtn')
+    .addEventListener('click', function () {
+      if (!ccSelectedShowtime || ccSelectedSeats.length === 0) {
         return;
       }
-    }
+      this.disabled = true;
 
-    var booking = {
-      userId: user.id,
-      movieId: movie.id,
-      movieTitle: movie.title,
-      poster: movie.poster,
-      showtime: ccSelectedShowtime,
-      seats: ccSelectedSeats.slice(),
-      seatCount: ccSelectedSeats.length,
-      pricePerSeat: movie.price,
-      totalPrice: ccSelectedSeats.length * movie.price,
-      status: 'Confirmed',
-    };
+      // check en el seats lessa mafeesh 7ad haghazha fel lahza el akhira
+      var stillBooked = ccGetBookedSeatsFor(movie.id, ccSelectedShowtime);
+      for (var i = 0; i < ccSelectedSeats.length; i++) {
+        if (stillBooked.indexOf(ccSelectedSeats[i]) !== -1) {
+          document.getElementById('bookingMsg').textContent =
+            'Sorry, seat ' +
+            ccSelectedSeats[i] +
+            ' was just taken. Please choose again.';
+          ccSelectedSeats = [];
+          ccRenderSeatMap();
+          ccUpdateSummary();
+          return;
+        }
+      }
 
-    ccAddBooking(booking);
-    window.location.href = 'bookings.html';
-  });
+      var booking = {
+        userId: user.id,
+        movieId: movie.id,
+        movieTitle: movie.title,
+        poster: movie.poster,
+        showtime: ccSelectedShowtime,
+        seats: ccSelectedSeats.slice(),
+        seatCount: ccSelectedSeats.length,
+        pricePerSeat: movie.price,
+        totalPrice: ccSelectedSeats.length * movie.price,
+        status: 'Confirmed',
+      };
+
+      ccAddBooking(booking);
+      window.location.href = 'bookings.html';
+    });
 }
 
 document.addEventListener('DOMContentLoaded', ccInitBookingPage);
