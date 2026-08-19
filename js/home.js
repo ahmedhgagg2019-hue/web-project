@@ -162,7 +162,7 @@ function ccRenderFeaturedMovies() {
     if (upcoming) {
       meta = movie.genre + ' · Coming Soon';
     } else {
-      var ratingText = movie.rating ? movie.rating : '—';
+     var ratingText = (movie.rating !== undefined && movie.rating !== null) ? movie.rating : '—';
       meta = movie.genre + ' · ★ ' + ratingText;
     }
 

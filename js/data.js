@@ -227,7 +227,7 @@ function ccGetMovieById(id) {
 function ccAddMovie(movie) {
   var movies = ccGetMovies();
   if (!movie.id) {
-    movie.id = 'm' + Date.now();
+    movie.id = 'm' + Date.now() + '_' + Math.floor(Math.random() * 1000);
   }
   movies.push(movie);
   ccSaveMovies(movies);
@@ -375,7 +375,7 @@ function ccSaveBookings(bookings) {
 // add booking
 function ccAddBooking(booking) {
   var bookings = ccGetBookings();
-  booking.id = 'b_' + Date.now();
+  booking.id = 'b_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
   booking.createdAt = new Date().toISOString();
   bookings.push(booking);
   ccSaveBookings(bookings);
