@@ -165,7 +165,7 @@ a:hover {
     display: block;
   }
 
-  .nav-cta a[href="register.html"] {
+  .nav-cta a[href='register.html'] {
     display: none;
   }
 }
