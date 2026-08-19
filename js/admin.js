@@ -26,7 +26,7 @@ function ccDrawAdminTable() {
             <td>${m.title}</td>
             <td>${m.genre}</td>
             <td>${m.releaseDate}</td>
-            <td class="rating-stars">${ccIsUpcoming(m) ? 'Upcoming' : (m.rating).toFixed(1)}</td>
+            <td class="rating-stars">${ccIsUpcoming(m) ? 'Upcoming' : (m.rating != null ? m.rating.toFixed(1) : '--')}</td>
             <td>${m.showtimes.length} slot${m.showtimes.length !== 1 ? 's' : ''}</td>
             <td>
                 <button class="btn btn-ghost btn-sm" onclick="ccOpenMovieModal('${m.id}')">Edit</button>
