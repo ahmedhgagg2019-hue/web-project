@@ -1,20 +1,20 @@
-// متغير حفظ بيانات المستخدم الحالي
+// user info
 var currentUser = null;
 
 document.addEventListener('DOMContentLoaded', function () {
-  // 1. تحميل بيانات البروفايل عند فتح الصفحة
+  // 1. bthal bynat el profile
   loadProfile();
 
-  // 2. ربط الـ Submit Event للـ Form
+  // 2. bnhadd bel ID
   var form = document.getElementById('profileForm');
   if (form) {
     form.addEventListener('submit', function (event) {
-      event.preventDefault();
+      event.preventDefault(); // bynmn3 refresh
       saveProfile();
     });
   }
 
-  // 3. ربط زرار Edit Profile
+  // 3. byaaml edit
   var editBtn = document.getElementById('editProfileBtn');
   if (editBtn) {
     editBtn.addEventListener('click', function () {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 4. ربط زرار Cancel
+  // 4. byaaml cancel
   var cancelBtn = document.getElementById('cancelEditBtn');
   if (cancelBtn) {
     cancelBtn.addEventListener('click', function () {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// 1. loadProfile()
+// 1. loadProfile
 function loadProfile() {
   currentUser = ccGetCurrentUser();
 
@@ -45,7 +45,7 @@ function loadProfile() {
   renderProfile(currentUser);
 }
 
-// 2. renderProfile(user)
+// 2. renderProfile
 function renderProfile(user) {
   var summaryName = document.getElementById('profileSummaryName');
   var summaryEmail = document.getElementById('profileSummaryEmail');
@@ -63,7 +63,7 @@ function renderProfile(user) {
   if (viewEmail) viewEmail.textContent = user.email || '';
 }
 
-// 3. showEditForm(user) -> تفعيل وضع التعديل وتعبئة الفورم
+// 3. showEditForm
 function showEditForm(user) {
   var form = document.getElementById('profileForm');
   var viewDetails = document.getElementById('profileView');
@@ -72,7 +72,6 @@ function showEditForm(user) {
   var emailInput = document.getElementById('profileEmail');
   var message = document.getElementById('profileMessage');
 
-  // تنظيف الرسائل القديمة وقت دخول وضع التعديل
   if (message) {
     message.textContent = '';
     message.className = 'form-message';
@@ -86,7 +85,7 @@ function showEditForm(user) {
   if (form) form.classList.remove('hidden');
 }
 
-// دالة مساعدة للرجوع لوضع العرض (View Mode)
+//bnrg3 llscreen el asasya
 function showViewMode() {
   var form = document.getElementById('profileForm');
   var viewDetails = document.getElementById('profileView');
@@ -97,7 +96,7 @@ function showViewMode() {
   if (viewDetails) viewDetails.classList.remove('hidden');
 }
 
-// 4. saveProfile()
+
 function saveProfile() {
   if (!currentUser) return;
 
@@ -113,14 +112,14 @@ function saveProfile() {
   var name = nameInput.value.trim();
   var email = emailInput.value.trim();
 
-  // أ. التحقق من إن الحقول مش فاضية
+  // law mtktbsh haga
   if (!name || !email) {
     message.classList.add('error');
     message.textContent = 'Please enter your name and email address.';
     return;
   }
 
-  // ب. التحقق من صحة صيغة الإيميل (Email Regex Check)
+  // lw el email msh mwgod
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     message.classList.add('error');
@@ -128,7 +127,7 @@ function saveProfile() {
     return;
   }
 
-  // ج. التحقق من تكرار الإيميل لدى مستخدم آخر
+  // law el email mwgod asln
   var existingUser = ccFindUserByEmail(email);
   if (existingUser && existingUser.id !== currentUser.id) {
     message.classList.add('error');
@@ -136,7 +135,7 @@ function saveProfile() {
     return;
   }
 
-  // د. تحديث بيانات المستخدم
+  // law 3ayz tghyr el user info
   var updatedUser = ccUpdateUser(currentUser.id, {
     name: name,
     email: email
@@ -151,12 +150,11 @@ function saveProfile() {
   currentUser = updatedUser;
   renderProfile(currentUser);
 
-  // هـ. تحديث الشريط العلوي (Navbar) مباشرة
   if (typeof ccRenderNav === 'function') {
     ccRenderNav('profile');
   }
 
-  // و. كتابة رسالة النجاح والرجوع لوضع العرض
+  // en kol haga tmam w nrg3 llscreen el asasya
   message.classList.add('success');
   message.textContent = 'Profile updated successfully.';
 
