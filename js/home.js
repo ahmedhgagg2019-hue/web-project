@@ -151,7 +151,7 @@ function ccRenderFeaturedMovies() {
   }
 
   var allMovies = ccGetMoviesSafe();
-  var movies = allMovies.slice(0, 4);
+  var movies = allMovies.slice(0, 8);
 
   var html = '';
   for (var i = 0; i < movies.length; i++) {
