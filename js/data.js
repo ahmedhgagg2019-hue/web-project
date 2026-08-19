@@ -150,7 +150,6 @@ function ccInitData() {
     // law mafeesh data metsave3a abl keda ne7ot el seed data
     localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(CC_SEED_MOVIES));
   } else {
-    // law feh data metsayva abl keda ne7ot el saved data 3ala el seed data, w ne7ot el saved data law feh updates
     var finalMovies = [];
 
     for (var i = 0; i < CC_SEED_MOVIES.length; i++) {
@@ -165,9 +164,11 @@ function ccInitData() {
       }
 
       var mergedMovie = {};
+      // n3ml merge ben el seed movie w el saved version law mwgoda
       for (var key in seedMovie) {
         mergedMovie[key] = seedMovie[key];
       }
+      // law mwgoda saved version n3ml override lel keys ely mwgoda fel seed movie
       if (savedVersion) {
         for (var key2 in savedVersion) {
           mergedMovie[key2] = savedVersion[key2];
@@ -192,10 +193,11 @@ function ccInitData() {
     // save el final movies fel localStorage
     localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(finalMovies));
   }
-
+  // check law mafeesh users fel localStorage ne7ot el admin account
   if (!localStorage.getItem(CC_KEYS.USERS)) {
     localStorage.setItem(CC_KEYS.USERS, JSON.stringify([CC_SEED_ADMIN]));
   }
+  // check law mafeesh bookings fel localStorage ne7ot array fadya
   if (!localStorage.getItem(CC_KEYS.BOOKINGS)) {
     localStorage.setItem(CC_KEYS.BOOKINGS, JSON.stringify([]));
   }
@@ -234,16 +236,18 @@ function ccAddMovie(movie) {
 // update movie
 function ccUpdateMovie(id, updates) {
   var movies = ccGetMovies();
-  var index = -1;
+  var index = -1; // index mbda2y be2ol eno ml2ash el movie
   for (var i = 0; i < movies.length; i++) {
     if (movies[i].id === id) {
       index = i;
       break;
     }
   }
+  // law el movie msh mwgoda, nrg3 null
   if (index === -1) {
     return null;
   }
+  // update el movie bta3na b el updates ely gayah
   for (var key in updates) {
     movies[index][key] = updates[key];
   }
@@ -261,8 +265,6 @@ function ccDeleteMovie(id) {
   }
   ccSaveMovies(newMovies);
 }
-
-// ---- init el data ----
 var ccMovies = ccGetMovies();
 
 // ---- users w login/register ----

@@ -1,6 +1,8 @@
 // highlight el page ely e7na feeha
 function ccRenderNav(activePage) {
-  var navLinks = document.querySelectorAll('.nav-links a[data-page]');
+  var navLinks = document.querySelectorAll('.nav-links a[data-page]'); // select kol el links ely 3andha data-page attribute
+
+  // loop 3la kol el links w check law el data-page bta3ha bta5od nafs el activePage lw kda n7ot class active lw la2 nshoof law mwgoda class active w nshofoha
   for (var i = 0; i < navLinks.length; i++) {
     if (navLinks[i].getAttribute('data-page') === activePage) {
       navLinks[i].classList.add('active');
@@ -45,13 +47,17 @@ function ccRenderNav(activePage) {
   if (cta) {
     if (user) {
       cta.innerHTML =
-        '<a class="nav-user" href="profile.html">Hi, ' + user.name + '</a>' +
+        '<a class="nav-user" href="profile.html">Hi, ' +
+        user.name +
+        '</a>' +
         '<button class="btn btn-outline btn-sm" id="navLogoutBtn" type="button">Logout</button>';
 
-      document.getElementById('navLogoutBtn').addEventListener('click', function () {
-        ccLogoutUser();
-        window.location.href = 'index.html';
-      });
+      document
+        .getElementById('navLogoutBtn')
+        .addEventListener('click', function () {
+          ccLogoutUser();
+          window.location.href = 'index.html';
+        });
     } else {
       cta.innerHTML =
         '<a class="btn btn-outline btn-sm" href="login.html">Login</a>' +

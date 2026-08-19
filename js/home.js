@@ -1,4 +1,4 @@
-// el function di bt3ml check lw el function ccGetMovies mwgoda aw la2, lw mwgoda bt3mlha call w trga3 el result, lw msh mwgoda trga3 array fady
+// el function di bt3ml check lw el function ccGetMovies mwgoda aw la2 lw mwgoda bt3mlha call w trga3 el result lw msh mwgoda trga3 array fady
 function ccGetMoviesSafe() {
   if (typeof ccGetMovies === 'function') {
     return ccGetMovies();
@@ -15,6 +15,7 @@ function ccInitHeroSlider() {
   var prevBtn = document.getElementById('sliderPrev');
   var nextBtn = document.getElementById('sliderNext');
 
+  // lw el slider ely fe el home page msh mwgoda nrg3
   if (!sliderEl || !track) {
     return;
   }
@@ -65,7 +66,7 @@ function ccInitHeroSlider() {
   }
   track.innerHTML = slidesHtml;
 
-  // nebni el dots, wa7ed le kol slide
+  // nebni el dots wa7ed le kol slide
   dotsWrap.innerHTML = '';
   for (var d = 0; d < slidesData.length; d++) {
     var dot = document.createElement('button');
@@ -108,7 +109,7 @@ function ccInitHeroSlider() {
   function prev() {
     goTo(index - 1);
   }
-  // el function di bt3ml start lel autoplay, bt3ml stop lw mwgoda w b3d kda bt3ml setInterval lel next every 5 seconds
+  // el function di bt3ml start lel autoplay bt3ml stop lw mwgoda w b3d kda bt3ml setInterval lel next every 5 seconds
   function startAutoplay() {
     stopAutoplay();
     autoplayId = setInterval(next, 5000);
@@ -133,7 +134,7 @@ function ccInitHeroSlider() {
       startAutoplay();
     });
   }
-
+  // 3shan el autoplay ywa2f lw el mouse 3la el slider w ybda2 lw el mouse msh 3la el slider
   sliderEl.addEventListener('mouseenter', stopAutoplay);
   sliderEl.addEventListener('mouseleave', startAutoplay);
 
@@ -144,7 +145,7 @@ function ccInitHeroSlider() {
 // ----- grid el featured movies -----
 // el function di bt3ml render lel featured movies grid, bta5od awel 4 movies mn el data w t7ot el html bta3hom fe el grid
 function ccRenderFeaturedMovies() {
-  var grid = document.getElementById('featuredMovies');
+  var grid = document.getElementById('featuredMovies'); // select el grid ely feh el featured movies
   if (!grid) {
     return;
   }
