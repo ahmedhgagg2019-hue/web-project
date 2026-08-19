@@ -1,6 +1,12 @@
 var ccEditingId = null;
 
 function ccInitAdmin() {
+    var user = ccGetCurrentUser();
+    if (!user || user.role !== 'admin') {
+        window.location.href = 'index.html';
+        return;
+    }
+    
     ccDrawAdminTable();
     document.getElementById("AddMovieBtn").addEventListener("click", () => ccOpenMovieModal()); // da arrow function 3ashan el click event mtt5dsh ka argument
     document.getElementById("movieForm").addEventListener("submit", ccSubmitMovieForm);
