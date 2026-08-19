@@ -463,7 +463,7 @@ a:hover {
   position: relative;
   overflow: hidden;
   border-radius: 14px;
-  aspect-ratio: 16 / 6;
+  aspect-ratio: 16 / 9;
   background: var(--ink-2);
 }
 
