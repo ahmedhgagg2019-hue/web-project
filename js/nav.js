@@ -14,7 +14,9 @@ function ccRenderNav(activePage) {
   //el mobile menu
   var toggle = document.getElementById('navToggle');
   var links = document.getElementById('navLinks');
-  if (toggle && links) {
+  if (toggle && links && !toggle.dataset.bound) {
+    toggle.dataset.bound = 'true';
+
     toggle.addEventListener('click', function () {
       links.classList.toggle('open');
     });
@@ -47,10 +49,10 @@ function ccRenderNav(activePage) {
   if (cta) {
     if (user) {
       cta.innerHTML =
-        '<a class="nav-user" href="profile.html">Hi, ' +
-        user.name +
-        '</a>' +
+        '<a class="nav-user" href="profile.html" id="navUserLink"></a>' +
         '<button class="btn btn-outline btn-sm" id="navLogoutBtn" type="button">Logout</button>';
+
+      document.getElementById('navUserLink').textContent = 'Hi, ' + user.name;
 
       document
         .getElementById('navLogoutBtn')
