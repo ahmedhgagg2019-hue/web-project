@@ -48,7 +48,7 @@ function ccBuildSeatMapHtml(bookedSeats) {
   return html;
 }
 
-// btcalculate w t3ras el total price w tfa22al/t2fel confirm button
+// btcalculate w t3rd el total price w t2fel confirm button
 function ccUpdateSummary() {
   var seatCountEl = document.getElementById('seatCount');
   var totalEl = document.getElementById('totalPrice');
@@ -66,7 +66,7 @@ function ccUpdateSummary() {
   confirmBtn.disabled = !(ccSelectedShowtime && ccSelectedSeats.length > 0);
 }
 
-// bt3ras el showtime buttons w tzabat el click listeners
+// bt3rad el showtime buttons w tzabat el click listeners
 function ccRenderShowtimes(movie) {
   var wrap = document.getElementById('showtimeSelect');
   if (!movie.showtimes || movie.showtimes.length === 0) {
@@ -96,7 +96,7 @@ function ccRenderShowtimes(movie) {
   }
 }
 
-// bt3ras el seat map bta3et el showtime el mokhtar
+// bt3rd el seat map bta3et el showtime el mokhtar
 function ccRenderSeatMap() {
   var seatWrap = document.getElementById('seatMapWrap');
 
@@ -190,11 +190,12 @@ function ccInitBookingPage() {
   ccRenderShowtimes(movie);
 
   document.getElementById('confirmBookingBtn').addEventListener('click', function () {
+    confirmBookingBtn.disabled=true;
     if (!ccSelectedShowtime || ccSelectedSeats.length === 0) {
       return;
     }
 
-    // dobol check en el seats lessa mafeesh 7ad haghazha fel lahza el akhira
+    // check en el seats lessa mafeesh 7ad haghazha fel lahza el akhira
     var stillBooked = ccGetBookedSeatsFor(movie.id, ccSelectedShowtime);
     for (var i = 0; i < ccSelectedSeats.length; i++) {
       if (stillBooked.indexOf(ccSelectedSeats[i]) !== -1) {
