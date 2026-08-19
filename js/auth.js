@@ -1,135 +1,151 @@
-document.addEventListener('DOMContentLoaded', () => {
+var EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const loginContainer = document.getElementById('login-form-container');
-  const registerContainer = document.getElementById('register-form-container');
-  const showRegisterBtn = document.getElementById('show-register-btn');
-  const showLoginBtn = document.getElementById('show-login-btn');
+document.addEventListener('DOMContentLoaded', function () {
+  var loginForm = document.getElementById('loginForm');
+  var registerForm = document.getElementById('registerForm');
 
-  const loginForm = document.getElementById('login-form');
-  const registerForm = document.getElementById('register-form');
-  const loginError = document.getElementById('login-error');
-  const registerError = document.getElementById('register-error');
-  const logoutBtn = document.getElementById('logout-btn');
-
-  if (showRegisterBtn) {
-    showRegisterBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      loginContainer.classList.add('hidden');
-      registerContainer.classList.remove('hidden');
-      clearErrors();
-    });
-  }
-
-  if (showLoginBtn) {
-    showLoginBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      registerContainer.classList.add('hidden');
-      loginContainer.classList.remove('hidden');
-      clearErrors();
-    });
-  }
-
-  function clearErrors() {
-    if (loginError) {
-      loginError.textContent = '';
-      loginError.classList.add('hidden');
-    }
-    if (registerError) {
-      registerError.textContent = '';
-      registerError.classList.add('hidden');
+  // Guests-only guard: if someone is already logged in and lands on
+  // login.html/register.html anyway (e.g. typed the URL directly),
+  // send them Home instead of showing the form.
+  if (typeof ccGetCurrentUser === 'function' && ccGetCurrentUser()) {
+    if (loginForm || registerForm) {
+      window.location.href = 'index.html';
+      return;
     }
   }
 
   if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      clearErrors();
-
-      const email = document.getElementById('login-email').value.trim();
-      const password = document.getElementById('login-password').value;
-
-      if (!email || !password) {
-        showError(loginError, 'Please enter both email and password.');
-        return;
-      }
-
-      if (typeof ccLoginUser !== 'function') {
-        showError(loginError, 'System error: authentication service is unavailable.');
-        return;
-      }
-
-      const result = ccLoginUser(email, password);
-
-      if (result && result.success) {
-        window.location.href = result.user && result.user.role === 'admin' ? 'admin.html' : 'index.html';
-      } else {
-        showError(loginError, (result && result.message) || 'Invalid email or password.');
-      }
-    });
+    loginForm.addEventListener('submit', handleLoginSubmit);
   }
 
   if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      clearErrors();
-
-      const name = document.getElementById('register-name').value.trim();
-      const email = document.getElementById('register-email').value.trim();
-      const password = document.getElementById('register-password').value;
-      const confirm = document.getElementById('register-confirm').value;
-
-      if (!name || !email || !password || !confirm) {
-        showError(registerError, 'Please fill in all fields.');
-        return;
-      }
-
-      if (password !== confirm) {
-        showError(registerError, 'Passwords do not match.');
-        return;
-      }
-
-      if (password.length < 6) {
-        showError(registerError, 'Password must be at least 6 characters long.');
-        return;
-      }
-
-      if (typeof ccRegisterUser !== 'function') {
-        showError(registerError, 'System error: registration service is unavailable.');
-        return;
-      }
-
-      const result = ccRegisterUser({ name, email, password });
-
-      if (result && result.success) {
-        window.location.href = 'index.html';
-      } else {
-        showError(registerError, (result && result.message) || 'Registration failed.');
-      }
-    });
+    registerForm.addEventListener('submit', handleRegisterSubmit);
   }
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (typeof ccLogoutUser === 'function') {
-        ccLogoutUser();
-      }
-      window.location.href = 'login.html';
-    });
-  }
-
-  function showError(element, text) {
-    if (element) {
-      element.textContent = text;
-      element.classList.remove('hidden');
-    }
-  }
-
 });
 
-function handleLogout() {
-  if (typeof ccLogoutUser === 'function') {
-    ccLogoutUser();
+// ---------- LOGIN ----------
+
+function handleLoginSubmit(e) {
+  e.preventDefault();
+
+  var emailInput = document.getElementById('loginEmail');
+  var passwordInput = document.getElementById('loginPassword');
+  var errorBox = document.getElementById('loginError');
+  var submitBtn = e.target.querySelector('button[type="submit"]');
+
+  var email = emailInput.value.trim();
+  var password = passwordInput.value;
+
+  hideError(errorBox);
+
+  if (!email || !password) {
+    showError(errorBox, 'Please enter both email and password.');
+    return;
   }
-  window.location.href = 'login.html';
+
+  if (!EMAIL_REGEX.test(email)) {
+    showError(errorBox, 'Please enter a valid email address.');
+    return;
+  }
+
+  setLoading(submitBtn, 'Logging in...');
+  var result = ccLoginUser(email, password);
+
+  if (result.ok) {
+    window.location.href = 'index.html';
+  } else {
+    setLoading(submitBtn, 'Login', false);
+    showError(errorBox, result.error || 'Invalid email or password.');
+  }
+}
+
+// ---------- REGISTER ----------
+
+function handleRegisterSubmit(e) {
+  e.preventDefault();
+
+  var nameInput = document.getElementById('registerName');
+  var emailInput = document.getElementById('registerEmail');
+  var passwordInput = document.getElementById('registerPassword');
+  var confirmPasswordInput = document.getElementById('registerConfirmPassword');
+  var errorBox = document.getElementById('registerError');
+  var submitBtn = e.target.querySelector('button[type="submit"]');
+
+  var name = nameInput.value.trim();
+  var email = emailInput.value.trim();
+  var password = passwordInput.value;
+  var confirmPassword = confirmPasswordInput.value;
+
+  hideError(errorBox);
+
+  if (!name || !email || !password || !confirmPassword) {
+    showError(errorBox, 'Please fill in all fields.');
+    return;
+  }
+
+  if (!EMAIL_REGEX.test(email)) {
+    showError(errorBox, 'Please enter a valid email address.');
+    return;
+  }
+
+  if (password.length < 6) {
+    showError(errorBox, 'Password must be at least 6 characters.');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showError(errorBox, 'Passwords do not match.');
+    return;
+  }
+
+  setLoading(submitBtn, 'Creating account...');
+  var registerResult = ccRegisterUser({ name: name, email: email, password: password });
+
+  if (!registerResult.ok) {
+    setLoading(submitBtn, 'Register', false);
+    showError(errorBox, registerResult.error || 'Registration failed. Please try again.');
+    return;
+  }
+
+  // ccRegisterUser() only creates the account, it doesn't start a session
+  // (only ccLoginUser() does that), so log the new user in right away
+  // for a smoother experience straight after signing up.
+  var loginResult = ccLoginUser(email, password);
+
+  if (loginResult.ok) {
+    window.location.href = 'index.html';
+  } else {
+    // Account was created but auto-login failed for some reason —
+    // send them to login instead of leaving them stuck on the form.
+    window.location.href = 'login.html';
+  }
+}
+
+// ---------- LOGOUT ----------
+// Exposed globally so nav.js can wire it up to the logout button in the
+// navbar (nav-cta) once that's built — not used on this page itself.
+function ccHandleLogout() {
+  ccLogoutUser();
+  window.location.href = 'index.html';
+}
+
+// ---------- HELPERS ----------
+
+function showError(errorBox, message) {
+  if (!errorBox) return;
+  errorBox.textContent = message;
+  errorBox.classList.remove('hidden');
+}
+
+function hideError(errorBox) {
+  if (!errorBox) return;
+  errorBox.textContent = '';
+  errorBox.classList.add('hidden');
+}
+
+function setLoading(button, label, isLoading) {
+  if (!button) return;
+  if (isLoading === undefined) isLoading = true;
+  button.disabled = isLoading;
+  button.textContent = label;
 }
