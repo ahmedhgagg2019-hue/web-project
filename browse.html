@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CinemaConnect · Browse Movies</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  .bm-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  #searchInput,
+  #genreFilter {
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    background: var(--ink-2);
+    color: var(--paper);
+    border: 1px solid rgba(241, 237, 228, 0.35);
+    font-family: var(--f-body);
+  }
+
+  #searchInput:focus,
+  #genreFilter:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  #searchInput {
+    flex: 1 1 250px;
+  }
+
+  #genreFilter {
+    cursor: pointer;
+  }
+
+  .bm-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .bm-card-actions .btn {
+    flex: 1;
+  }
+
+  .bm-no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 0;
+    color: var(--paper-dim);
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+<nav class="navbar">
+<a href="index.html" class="brand"
+>CINEMA<span class="dot">•</span>CONNECT</a
+>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          ☰
+</button>
+<ul class="nav-links" id="navLinks">
+<li><a href="index.html" data-page="home">Home</a></li>
+<li><a href="browse.html" data-page="browse">Browse Movies</a></li>
+<li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
+<li>
+
+href="admin.html"
+data-page="admin"
+id="adminNavLink"
+class="hidden"
+>Admin</a
+>
+</li>
+</ul>
+<div class="nav-cta" id="navCta"></div>
+</nav>
+<div class="filmstrip-rule"></div>
+</header>
+
+<main>
+
+  <section class="container section">
+
+    <div class="section-head">
+      <div class="section-title">Browse Movies</div>
+    </div>
+    <p class="hero-sub">Search and filter through all the movies available on CinemaConnect.</p>
+
+    <div class="bm-controls">
+      <input type="text" id="searchInput" placeholder="Search movies...">
+      <select id="genreFilter">
+        <option value="all">All Genres</option>
+      </select>
+    </div>
+
+    <div class="movie-grid" id="moviesGrid">
+      <!-- filled by js/browse.js -->
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="site-footer">
+<div class="filmstrip-rule flip"></div>
+<div class="container">
+        CinemaConnect · Web Development Summer Training 2026.
+</div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/browse.js"></script>
+<script>
+ccRenderNav('browse');
+</script>
+</body>
+</html>
