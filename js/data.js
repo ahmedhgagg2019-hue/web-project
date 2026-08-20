@@ -485,10 +485,12 @@ ccInitData();
 function ccGetMovies() {
   return ccReadArray(CC_KEYS.MOVIES) || [];
 }
+
 // save el movies fel localStorage
 function ccSaveMovies(movies) {
   localStorage.setItem(CC_KEYS.MOVIES, JSON.stringify(movies));
 }
+
 // get movie by id
 function ccGetMovieById(id) {
   var movies = ccGetMovies();
@@ -499,6 +501,7 @@ function ccGetMovieById(id) {
   }
   return null;
 }
+
 // add movie
 function ccAddMovie(movie) {
   var movies = ccGetMovies();
@@ -509,6 +512,7 @@ function ccAddMovie(movie) {
   ccSaveMovies(movies);
   return movie;
 }
+
 // update movie
 function ccUpdateMovie(id, updates) {
   var movies = ccGetMovies();
@@ -530,6 +534,7 @@ function ccUpdateMovie(id, updates) {
   ccSaveMovies(movies);
   return movies[index];
 }
+
 // delete movie
 function ccDeleteMovie(id) {
   var movies = ccGetMovies();
@@ -548,10 +553,12 @@ var ccMovies = ccGetMovies();
 function ccGetUsers() {
   return ccReadArray(CC_KEYS.USERS) || [];
 }
+
 // save el users fel localStorage
 function ccSaveUsers(users) {
   localStorage.setItem(CC_KEYS.USERS, JSON.stringify(users));
 }
+
 // find user by email
 function ccFindUserByEmail(email) {
   var users = ccGetUsers();
@@ -562,6 +569,7 @@ function ccFindUserByEmail(email) {
   }
   return null;
 }
+
 // register user
 function ccRegisterUser(data) {
   var existingUser = ccFindUserByEmail(data.email);
@@ -582,6 +590,7 @@ function ccRegisterUser(data) {
 
   return { ok: true, user: newUser };
 }
+
 // login user
 function ccLoginUser(email, password) {
   var user = ccFindUserByEmail(email);
@@ -591,6 +600,7 @@ function ccLoginUser(email, password) {
   localStorage.setItem(CC_KEYS.SESSION, JSON.stringify({ userId: user.id }));
   return { ok: true, user: user };
 }
+
 // update user
 function ccUpdateUser(id, updates) {
   var users = ccGetUsers();
