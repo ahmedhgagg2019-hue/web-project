@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaConnect · Login</title>
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Internal CSS Styles khasah b-page el-Login bas -->
     <style>
+      /* Section el-Auth: Beykhaly el-card f nss el-shasha bi flexbox */
       .auth-section {
         padding: 72px 0 88px;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: calc(100vh - 220px);
+        min-height: calc(100vh - 220px); 
       }
 
+      /* Card el-Form: Khalfeya, border-radius, w el-khat el-dahaby el-fo'a */
       .auth-card {
         width: 100%;
         max-width: 420px;
@@ -24,6 +28,7 @@
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
       }
 
+      /* Title w Subtitle el-form */
       .auth-title {
         font-family: var(--f-display);
         font-size: 34px;
@@ -38,6 +43,7 @@
         margin: 0 0 28px;
       }
 
+      /* Layout el-inputs: Label w Input ta7t ba3d */
       .auth-form .form-group {
         margin-bottom: 18px;
         display: flex;
@@ -45,6 +51,7 @@
         gap: 6px;
       }
 
+      /* Style el-Label */
       .auth-form label {
         font-size: 12px;
         font-weight: 600;
@@ -53,6 +60,7 @@
         color: var(--paper-dim);
       }
 
+      /* Style el-Input fields */
       .auth-form input {
         background: var(--ink);
         border: 1px solid rgba(241, 237, 228, 0.15);
@@ -61,32 +69,34 @@
         color: var(--paper);
         font-family: var(--f-body);
         font-size: 14px;
-        transition:
-          border-color 0.15s ease,
-          box-shadow 0.15s ease;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
       }
 
       .auth-form input::placeholder {
         color: rgba(241, 237, 228, 0.35);
       }
 
+      /* Lma el-user ydous 3ala el-input, beyzhar border dahaby glow */
       .auth-form input:focus {
         outline: none;
         border-color: var(--gold);
         box-shadow: 0 0 0 3px rgba(217, 165, 68, 0.15);
       }
 
+      /* Style زرار Login */
       .auth-submit {
         width: 100%;
         margin-top: 8px;
       }
 
+      /* Style el-button lma yeb'a Disabled f el-Loading */
       .auth-submit:disabled {
         opacity: 0.6;
         cursor: not-allowed;
         transform: none;
       }
 
+      /* Box el-error (A7mar) beyzhar lma el-data tb'a ghalat */
       .form-error {
         background: rgba(200, 57, 43, 0.14);
         border: 1px solid rgba(200, 57, 43, 0.4);
@@ -97,6 +107,7 @@
         margin-bottom: 18px;
       }
 
+      /* Box el-success (Akhdar) beyzhar ba3d el-register */
       .form-success {
         background: rgba(79, 179, 168, 0.14);
         border: 1px solid rgba(79, 179, 168, 0.4);
@@ -107,6 +118,7 @@
         margin-bottom: 18px;
       }
 
+      /* Style el-link بتاع Register */
       .auth-switch {
         text-align: center;
         margin-top: 22px;
@@ -118,6 +130,7 @@
         font-weight: 600;
       }
 
+      /* Responsive Media Query le el-Mobiles */
       @media (max-width: 480px) {
         .auth-card {
           padding: 32px 24px;
@@ -128,41 +141,39 @@
 <body>
     <header class="site-header">
       <nav class="navbar">
-        <a href="index.html" class="brand"
-          >CINEMA<span class="dot">•</span>CONNECT</a
-        >
+        <a href="index.html" class="brand">CINEMA<span class="dot">•</span>CONNECT</a>
+        
         <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
           ☰
         </button>
+        
+        <!-- Links el-Navigation -->
         <ul class="nav-links" id="navLinks">
           <li><a href="index.html" data-page="home">Home</a></li>
           <li><a href="browse.html" data-page="browse">Browse Movies</a></li>
           <li><a href="bookings.html" data-page="bookings">My Bookings</a></li>
           <li>
-            <a
-              href="admin.html"
-              data-page="admin"
-              id="adminNavLink"
-              class="hidden"
-              >Admin</a
-            >
+            <a href="admin.html" data-page="admin" id="adminNavLink" class="hidden">Admin</a>
           </li>
         </ul>
+        
+        <!-- Container 3ashan el-JS y-zher feeh زرار Login/Logout -->
         <div class="nav-cta" id="navCta"></div>
       </nav>
       <div class="filmstrip-rule"></div>
     </header>
 
+    <!-- Main Content Area -->
     <main>
       <section class="auth-section">
         <div class="auth-card">
           <h1 class="auth-title">Login</h1>
           <p class="auth-subtitle">Welcome back! Please enter your details.</p>
-
           <div id="loginSuccess" class="form-success hidden" role="status"></div>
           <div id="loginError" class="form-error hidden" role="alert"></div>
-
           <form id="loginForm" class="auth-form" novalidate>
+            
+            <!-- Input 1: Email -->
             <div class="form-group">
               <label for="loginEmail">Email</label>
               <input
@@ -175,6 +186,7 @@
               />
             </div>
 
+            <!-- Input 2: Password -->
             <div class="form-group">
               <label for="loginPassword">Password</label>
               <input
@@ -187,11 +199,12 @@
               />
             </div>
 
+            <!-- Submit Button -->
             <button type="submit" class="btn btn-primary auth-submit">
               Login
             </button>
           </form>
-
+            
           <p class="auth-switch">
             Don't have an account? <a href="register.html">Register</a>
           </p>
@@ -199,16 +212,17 @@
       </section>
     </main>
 
+    <!-- Site Footer -->
     <footer class="site-footer">
       <div class="filmstrip-rule flip"></div>
       <div class="container">
         CinemaConnect · Web Development Summer Training 2026.
       </div>
     </footer>
-
     <script src="js/data.js"></script>
-    <script src="js/nav.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="js/nav.js"></script>   
+    <script src="js/auth.js"></script> 
+    
     <script>
         ccRenderNav('login');
     </script>
