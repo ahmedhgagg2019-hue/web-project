@@ -52,7 +52,7 @@ function ccOpenMovieModal(id) {
         form.showtimes.value = m.showtimes.join(', '); // da array fa bna3mel join
         form.poster.value = m.poster;
         form.price.value = m.price;
-        form.banner.value = m.banner;
+        form.banner.value = m.banner || '';
     }
     document.getElementById("movieModal").classList.add("open");
 }
