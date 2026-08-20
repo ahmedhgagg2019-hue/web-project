@@ -64,12 +64,13 @@ function ccCloseMovieModal() {
 function ccSubmitMovieForm(e) {
     e.preventDefault(); // e da el event w shelt el default actions 3ashan ana ely ba3mel el submit function
     var form = e.target; // el form howa target el submit event
+    var ratingValue = form.rating.value.trim();
     var info = {
         title: form.title.value.trim(),
         genre: form.genre.value.trim(),
         releaseDate: form.releaseDate.value,
         duration: parseInt(form.duration.value) || 1, // 8ayart mn string le int
-        rating: Math.max(0, Math.min(10, parseFloat(form.rating.value) || 0)), // nt2aked eno mn 0-10
+        rating: form.rating.value.trim() === '' ? null : Math.max(0, Math.min(10, parseFloat(form.rating.value))), 
         description: form.description.value.trim(),
         showtimes: form.showtimes.value.split(',').map(s => s.trim()).filter(Boolean), // split to array ba3daha trim le ay whitespaces ba3daha filter any empty parts
         poster: form.poster.value.trim() || 'images/posters/evil-dead-burn.jpg',
