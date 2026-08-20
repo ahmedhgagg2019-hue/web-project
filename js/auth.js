@@ -1,19 +1,12 @@
-// Handles Login / Register / Logout UI logic ONLY.
-// All real authentication/session logic lives in data.js:
-//   ccLoginUser(email, password)  -> { ok: true, user }  or { ok: false, error }
-//   ccRegisterUser(data)          -> { ok: true, user }  or { ok: false, error }
-//   ccLogoutUser()                -> clears the session
-//   ccGetCurrentUser()            -> logged-in user object, or null
-
+//  3ashan acheck biha in el-email maktoub sa7 (zay name@domain.com)
 var EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 document.addEventListener('DOMContentLoaded', function () {
   var loginForm = document.getElementById('loginForm');
   var registerForm = document.getElementById('registerForm');
 
-  // Guests-only guard: if someone is already logged in and lands on
-  // login.html/register.html anyway (e.g. typed the URL directly),
-  // send them Home instead of showing the form.
+  // Law el-user 3amel Login el-ady (ya3ny registered w dakhel 3ala el-site)
+  // w garb yfta7 page el-Login aw el-Register ydwyan, bnn2loh 3ala el-Home page (index.html)
   if (typeof ccGetCurrentUser === 'function' && ccGetCurrentUser()) {
     if (loginForm || registerForm) {
       window.location.href = 'index.html';
@@ -29,8 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
     registerForm.addEventListener('submit', handleRegisterSubmit);
   }
 
-  // Landed here right after a successful registration (edge case where
-  // auto-login failed) — show a friendly heads-up instead of silence.
+
+  // ---------- SHOW SUCCESS MESSAGE AFTER REGISTER ----------
+  // Law el-user gae mn el-register w el-URL feeh "?registered=true
   var params = new URLSearchParams(window.location.search);
   if (params.get('registered') === 'true') {
     var successBox = document.getElementById('loginSuccess');
@@ -44,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // ---------- LOGIN ----------
 
 function handleLoginSubmit(e) {
-  e.preventDefault();
+  e.preventDefault();  // Bnmna3 elbrowser eno y3mel Refresh le elpage
 
   var emailInput = document.getElementById('loginEmail');
   var passwordInput = document.getElementById('loginPassword');
@@ -66,6 +60,7 @@ function handleLoginSubmit(e) {
     return;
   }
 
+  // Bn-khaly el-button Disabled w bn-ktb feeh "Logging in..."
   setLoading(submitBtn, 'Logging in...');
   var result = ccLoginUser(email, password);
 
@@ -80,7 +75,7 @@ function handleLoginSubmit(e) {
 // ---------- REGISTER ----------
 
 function handleRegisterSubmit(e) {
-  e.preventDefault();
+  e.preventDefault();   // Bn-mna3 el-Refresh
 
   var nameInput = document.getElementById('registerName');
   var emailInput = document.getElementById('registerEmail');
@@ -94,6 +89,7 @@ function handleRegisterSubmit(e) {
   var password = passwordInput.value;
   var confirmPassword = confirmPasswordInput.value;
 
+  
   hideError(errorBox);
 
   if (!name || !email || !password || !confirmPassword) {
@@ -116,7 +112,10 @@ function handleRegisterSubmit(e) {
     return;
   }
 
+  // Bn-khaly el-button Loading
   setLoading(submitBtn, 'Creating account...');
+
+  // Bn-nady function el-register mn data.js
   var registerResult = ccRegisterUser({ name: name, email: email, password: password });
 
   if (!registerResult.ok) {
@@ -125,43 +124,43 @@ function handleRegisterSubmit(e) {
     return;
   }
 
-  // ccRegisterUser() only creates the account, it doesn't start a session
-  // (only ccLoginUser() does that), so log the new user in right away
-  // for a smoother experience straight after signing up.
+  // Auto-login: lma el-register y-nga7, bn-3mel login 3ala tool 3ashan n-sehel 3ala el-user
   var loginResult = ccLoginUser(email, password);
 
   if (loginResult.ok) {
     window.location.href = 'index.html';
   } else {
-    // Account was created but auto-login failed for some reason —
-    // send them to login instead of leaving them stuck on the form,
-    // with a flag so login.html can tell them why they're there.
+
+    // Law el-account it3mal bas el-auto-login feshil, bnn2loh le login.html ma3a parameter ?registered=true
     window.location.href = 'login.html?registered=true';
   }
 }
 
 // ---------- LOGOUT ----------
-// Exposed globally so nav.js can wire it up to the logout button in the
-// navbar (nav-cta) once that's built — not used on this page itself.
+
+// Function global 3ashan el-navbar y-estakdemha lma el-user ydous Logout
 function ccHandleLogout() {
   ccLogoutUser();
-  window.location.href = 'index.html';
+  window.location.href = 'index.html';  // byruh el home
 }
 
 // ---------- HELPERS ----------
 
+//  3ashan tzher el-error box w tktb feeh elmessage
 function showError(errorBox, message) {
   if (!errorBox) return;
   errorBox.textContent = message;
   errorBox.classList.remove('hidden');
 }
 
+//bakhfy elerror box
 function hideError(errorBox) {
   if (!errorBox) return;
   errorBox.textContent = '';
   errorBox.classList.add('hidden');
 }
 
+// bghyr elbutton state (Disabled / Text / Loading).
 function setLoading(button, label, isLoading) {
   if (!button) return;
   if (isLoading === undefined) isLoading = true;
